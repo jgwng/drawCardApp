@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DrawPageController extends GetxController{
-  RxList<DrawnLine> lines = <DrawnLine>[].obs;
+  RxList<DrawnLine?> lines = <DrawnLine?>[].obs;
   Rx<DrawnLine?> line = DrawnLine().obs;
-
+  Rx<Color> drawColor = Colors.red.obs;
+  RxBool isEraseMode = false.obs;
+  Paint paint = Paint();
   void clearScreen(){
     line.value =  DrawnLine();
     lines.clear();
@@ -14,7 +16,17 @@ class DrawPageController extends GetxController{
   void onDrawStart(DragStartDetails details){
     RenderBox box = Get.context!.findRenderObject() as RenderBox;
     Offset point = box.globalToLocal(details.globalPosition);
-    line.value = DrawnLine(path : [point], color : Colors.red, width : 2.0);
+
+    if(isEraseMode.isTrue){
+      paint = Paint()..color =  Colors.yellow[50]!
+    ..blendMode = BlendMode.clear
+    ..strokeWidth = 100
+    ..style = PaintingStyle.stroke;
+    }else{
+      paint = Paint()..color = drawColor.value
+      ..strokeWidth = 2.0;
+    }
+    line.value = DrawnLine(path : [point], paint : paint, width : paint.strokeWidth);
   }
 
   void onDrawing(DragUpdateDetails details){
@@ -22,7 +34,18 @@ class DrawPageController extends GetxController{
     Offset point = box.globalToLocal(details.globalPosition);
 
     List<Offset> path = List.from(line.value!.path)..add(point);
-    line.value = DrawnLine(path : path, color : Colors.red, width : 2.0);
+
+    if(isEraseMode.isTrue){
+      paint = Paint()..color = Colors.yellow[50]!
+        ..blendMode = BlendMode.clear
+        ..strokeWidth =100
+      ..strokeCap = StrokeCap.round;
+    }else{
+      paint = Paint()..color = drawColor.value
+        ..strokeWidth = 2.0;
+    }
+
+    line.value = DrawnLine(path : path, paint : paint, width :paint.strokeWidth);
   }
 
   void onDrawEnd(DragEndDetails details) {
@@ -31,5 +54,11 @@ class DrawPageController extends GetxController{
     refresh();
   }
 
+  void colorChange(Color color){
+    drawColor.value = color;
+  }
 
+  void toggleEraseMode(){
+    isEraseMode.toggle();
+  }
 }
