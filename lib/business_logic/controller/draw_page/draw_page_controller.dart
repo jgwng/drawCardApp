@@ -8,6 +8,17 @@ class DrawPageController extends GetxController{
   Rx<Color> drawColor = Colors.red.obs;
   RxBool isEraseMode = false.obs;
   Paint paint = Paint();
+
+  static DrawPageController? get to{
+    if(Get.isRegistered<DrawPageController>()){
+      return Get.find<DrawPageController>();
+    }else{
+      return null;
+    }
+  }
+
+
+
   void clearScreen(){
     line.value =  DrawnLine();
     lines.clear();
@@ -17,15 +28,9 @@ class DrawPageController extends GetxController{
     RenderBox box = Get.context!.findRenderObject() as RenderBox;
     Offset point = box.globalToLocal(details.globalPosition);
 
-    if(isEraseMode.isTrue){
-      paint = Paint()..color =  Colors.yellow[50]!
-    ..blendMode = BlendMode.clear
-    ..strokeWidth = 100
-    ..style = PaintingStyle.stroke;
-    }else{
-      paint = Paint()..color = drawColor.value
+    paint = Paint()..color = (isEraseMode.isTrue) ? Colors.white : drawColor.value
+      ..isAntiAlias = true
       ..strokeWidth = 2.0;
-    }
     line.value = DrawnLine(path : [point], paint : paint, width : paint.strokeWidth);
   }
 
@@ -34,24 +39,14 @@ class DrawPageController extends GetxController{
     Offset point = box.globalToLocal(details.globalPosition);
 
     List<Offset> path = List.from(line.value!.path)..add(point);
-
-    if(isEraseMode.isTrue){
-      paint = Paint()..color = Colors.yellow[50]!
-        ..blendMode = BlendMode.clear
-        ..strokeWidth =100
-      ..strokeCap = StrokeCap.round;
-    }else{
-      paint = Paint()..color = drawColor.value
-        ..strokeWidth = 2.0;
-    }
-
-    line.value = DrawnLine(path : path, paint : paint, width :paint.strokeWidth);
+    paint = Paint()..color = (isEraseMode.isTrue) ? Colors.white : drawColor.value
+      ..isAntiAlias = true
+      ..strokeWidth = 2.0;
+    line.value = DrawnLine(path :path, paint : paint, width :paint.strokeWidth);
   }
 
   void onDrawEnd(DragEndDetails details) {
-
     lines.add(line.value!);
-    refresh();
   }
 
   void colorChange(Color color){

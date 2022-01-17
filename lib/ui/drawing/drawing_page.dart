@@ -1,19 +1,20 @@
-import 'package:drawcard/business_logic/controller/draw_page_controller.dart';
+import '../../business_logic/controller/draw_page/draw_page_controller.dart';
+import 'package:drawcard/painter/sketcher.dart';
 import 'package:get/get.dart';
-import '../painter/sketcher.dart';
+import '../../painter/sketcher.dart';
 import 'package:flutter/material.dart';
 
 class DrawingPage extends GetView<DrawPageController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow[50],
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
             child: Stack(
               children: [
-                buildTotalPath(),
+                  buildTotalPath(),
                   buildCurrentPath(),
               ],
             ),
@@ -27,7 +28,6 @@ class DrawingPage extends GetView<DrawPageController>{
               colorButton(Colors.purple),
               colorButton(Colors.brown),
               colorButton(Colors.grey),
-
             ],
           ),
           Obx((){
@@ -82,18 +82,18 @@ class DrawingPage extends GetView<DrawPageController>{
   Widget buildTotalPath() {
     return RepaintBoundary(
       child: Obx((){
-        return Container(
-          width: Get.width,
-          height: Get.height,
-          padding: EdgeInsets.all(4.0),
-          color: Colors.transparent,
-          alignment: Alignment.topLeft,
-          child: CustomPaint(
-            painter: Sketcher(
-              lines: [controller.line.value],
+        return CustomPaint(
+            size: Size.infinite,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(40),
+                child: Image.asset('assets/images/apple.png',
+                  color: Colors.grey[200],),
+              ),
             ),
-          ),
-        );
+            foregroundPainter:Sketcher(
+              lines: controller.lines..toList(),
+            ));
       }),
     );
   }
@@ -105,15 +105,12 @@ class DrawingPage extends GetView<DrawPageController>{
       onPanEnd: (details) => controller.onDrawEnd(details),
       child: Obx((){
         return RepaintBoundary(
-          child: Container(
-            width: Get.width,
-            height: Get.height,
-            padding: EdgeInsets.all(4.0),
-            color: Colors.transparent,
-            alignment: Alignment.topLeft,
-            child:CustomPaint(
+          child: Opacity(
+            opacity: 0.99,
+            child: CustomPaint(
+              size: Size.infinite,
               painter: Sketcher(
-                lines: controller.lines..toList(),
+                lines: [controller.line.value],
               ),
             ),
           ),
