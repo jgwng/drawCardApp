@@ -1,8 +1,11 @@
 import 'package:drawcard/consts/pages.dart';
+import 'package:drawcard/consts/routes.dart';
+import 'package:drawcard/init_setting.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  await initAppSetting();
   runApp(MyApp());
 }
 
@@ -15,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       getPages: AppPages.pages,
-      initialRoute: '/auth',
+      initialRoute: Routes.home,
     );
   }
 }
