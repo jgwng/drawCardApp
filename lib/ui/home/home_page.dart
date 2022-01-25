@@ -7,6 +7,7 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage>{
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,24 +15,57 @@ class _HomePageState extends State<HomePage>{
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: (){
-              Get.dialog(menuSelector(),barrierDismissible : false,
-                  barrierColor:null,
-                useSafeArea: true
-             );
-            },
-            child: Container(
-              width: 100,
-              height: 50,
-              color: Colors.red,
-            ),
+          Container(
+            height: 400,
+            child: PageView.builder(
+                itemCount: 5,
+                physics: ClampingScrollPhysics(),
+                controller: PageController(),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (ctx,i){
+                  return Container(
+                    width: 300,
+                    height: 300,
+                    color: (i%2 == 0) ? Colors.red : Colors.blue,
+                  );
+                }),
           )
         ],
       ),
+      bottomNavigationBar : BottomAppBar(
+         shape: CircularNotchedRectangle(),
+        child: Container(
+          height: 60,
+          padding: EdgeInsets.symmetric(horizontal: 60),
+          child: Row(
+            mainAxisAlignment : MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(icon: Icon(Icons.menu, color: Colors.black,), onPressed: () {},),
+              IconButton(icon: Icon(Icons.settings, color: Colors.black,), onPressed: () {},),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        width: 100,
+        height: 100,
+        margin: EdgeInsets.only(bottom: 30),
+        child: FittedBox(
+          child:  FloatingActionButton(
+            backgroundColor: Colors.green,
+            onPressed: (){
+              Get.dialog(menuSelector(),barrierDismissible : false,
+                  barrierColor:null,
+                  useSafeArea: true
+              );
+            },
+            child: Icon(Icons.add_rounded,size: 40,),
+          ),
+        ),
+      ),
     );
   }
-
 
   Widget menuSelector(){
     return Material(

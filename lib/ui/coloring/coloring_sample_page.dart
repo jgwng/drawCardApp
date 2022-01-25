@@ -91,7 +91,9 @@ class _ImageSelectPageState extends State<ImageSelectPage>{
       elevation: 0,
       titleSpacing: 0,
       backgroundColor: Colors.white,
-      title: Text('컬러링',style: AppThemes.textTheme.headline2,),
+      title: Text('컬러링',
+        textScaleFactor : 1.0,
+        style: AppThemes.textTheme.headline2,),
     );
   }
 
