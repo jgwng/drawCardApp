@@ -1,7 +1,7 @@
-import '../../business_logic/controller/draw_page/draw_page_controller.dart';
+import 'package:drawcard/business_logic/controller/draw_page/draw_page_controller.dart';
+
 import 'package:drawcard/painter/sketcher.dart';
 import 'package:get/get.dart';
-import '../../painter/sketcher.dart';
 import 'package:flutter/material.dart';
 
 class DrawingPage extends GetView<DrawPageController>{

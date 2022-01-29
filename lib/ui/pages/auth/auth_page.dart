@@ -1,10 +1,12 @@
 import 'package:drawcard/business_logic/controller/auth_page/auth_page_controller.dart';
-import 'package:drawcard/ui/auth/login_page.dart';
-import 'package:drawcard/ui/auth/sign_up_page.dart';
+import 'package:drawcard/consts/app_themes.dart';
+import 'package:drawcard/ui/mixin/tabbar_mixin.dart';
+import 'login_page.dart';
+import 'sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AuthPage extends GetView<AuthPageController>{
+class AuthPage extends GetView<AuthPageController> with TabBarMixin{
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +25,15 @@ class AuthPage extends GetView<AuthPageController>{
                   width: 200,
                   child: TabBar(
                     tabs: [
-                      authTab('로그인'),
-                      authTab('회원가입'),
+                      menuTab('로그인',80),
+                      menuTab('회원가입',80),
                     ],
-                    indicator: BoxDecoration(
-                      gradient: LinearGradient(  //배경 그라데이션 적용
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colors.blueAccent,
-                          Colors.pinkAccent,
-                        ],
-                      ),
+                    unselectedLabelStyle: AppThemes.textTheme.bodyText1!.copyWith(
+                        color: Colors.grey[400]
                     ),
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Colors.black,
-                    controller: controller.tabController,
+                    labelStyle: AppThemes.textTheme.bodyText1,
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey[400],
                   ),
                 )
               ],
@@ -59,13 +54,5 @@ class AuthPage extends GetView<AuthPageController>{
     );
   }
 
-  Widget authTab(String title){
-    return Container(
-      height: 80,
-      alignment: Alignment.center,
-      child: Text(
-        title,
-      ),
-    );
-  }
+
 }

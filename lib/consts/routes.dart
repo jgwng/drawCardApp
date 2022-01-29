@@ -7,5 +7,9 @@ class Routes{
   static const String login = '/login';
   static const String home = '/home';
   static const String imageSelect = '/select';
+  static const String setting = '/setting';
+  static const String favorite = '/favorite';
+  static const String recent = '/recent';
+  static const String total = '/total';
 
 }
