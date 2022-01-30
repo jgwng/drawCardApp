@@ -64,6 +64,6 @@ class AppPages{
         name : Routes.favorite,
         binding: FavoritePageBinding(),
         page: () =>FavoriteView()
-    )
+    ),
   ];
 }
