@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RecentPageController extends GetxController{
 
   RxBool currentValue = false.obs;
-
+  PageController pageController = PageController(
+    viewportFraction: 0.9
+  );
 
   @override
   void onInit() {

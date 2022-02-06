@@ -1,3 +1,4 @@
+import 'package:drawcard/consts/size.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
