@@ -1,5 +1,4 @@
 import 'package:drawcard/business_logic/controller/draw_page/draw_page_controller.dart';
-
 import 'package:drawcard/painter/sketcher.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -77,20 +76,11 @@ class DrawingPage extends GetView<DrawPageController>{
     );
   }
 
-
-
   Widget buildTotalPath() {
     return RepaintBoundary(
       child: Obx((){
         return CustomPaint(
             size: Size.infinite,
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(40),
-                child: Image.asset('assets/images/apple.png',
-                  color: Colors.grey[200],),
-              ),
-            ),
             foregroundPainter:Sketcher(
               lines: controller.lines..toList(),
             ));

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class RecentPageController extends GetxController{
 
-  RxBool currentValue = false.obs;
+  RxList<bool> favoriteList = <bool>[false,false,false].obs;
   PageController pageController = PageController(
     viewportFraction: 0.9
   );
@@ -20,8 +20,13 @@ class RecentPageController extends GetxController{
   @override
   void onReady(){
     super.onReady();
-    currentValue.value = true;
     print('RecentPageController onReady');
+  }
+
+  void toggleFavorite(int index){
+    bool isFavorite = favoriteList[index];
+    isFavorite = !isFavorite;
+    favoriteList[index] = isFavorite;
   }
 
 }

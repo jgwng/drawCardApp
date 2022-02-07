@@ -35,5 +35,13 @@ class UISize{
   double height(double widgetHeight){
     return (widgetHeight/ deviceHeight!) * _baseHeight;
   }
+}
 
+extension UISizeDoubleExtension on num{
+  double get w{
+    return UISize().width(this.toDouble());
+  }
+  double get h{
+    return UISize().height(this.toDouble());
+  }
 }

@@ -22,14 +22,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin,TabBa
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            Divider(
-              color: Colors.grey[400],
-              height: 1,
-              thickness: 1,
-            ),
             Container(
               alignment : Alignment.centerLeft,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey[400]!,
+                    width: 1,
+                  )
+                )
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
@@ -86,5 +88,4 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin,TabBa
       ),
     );
   }
-
 }
