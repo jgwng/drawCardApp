@@ -2,26 +2,22 @@ import '../business_logic/model/drawn_line.dart';
 import 'package:flutter/material.dart';
 
 class Sketcher extends CustomPainter {
-  final List<DrawnLine?> lines;
+  final List<DrawnLine> lines;
   Sketcher({required this.lines});
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = Colors.redAccent
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 5.0;
-    for (int i = 0; i < lines.length; ++i) {
-      if (lines[i] == null) continue;
-
-      for (int j = 0; j < lines[i]!.path.length - 1; ++j) {
-        if (lines[i]!.path[j] != null && lines[i]!.path[j + 1] != null) {
-          paint = lines[i]!.paint!;
-          paint.strokeWidth = lines[i]!.width;
-          canvas.drawLine(lines[i]!.path[j]!, lines[i]!.path[j + 1]!, paint);
-        }
-      }
+    canvas.saveLayer(Rect.fromLTWH(0, 0, size.width, size.height), Paint());
+    for (final stroke in lines) {
+      final paint = Paint()
+        ..strokeWidth = stroke.width
+        ..color = (stroke.isErase) ? Colors.transparent : stroke.paint ?? Colors.red
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke
+        ..blendMode = (stroke.isErase) ? BlendMode.clear : BlendMode.srcOver;
+      canvas.drawPath(stroke.path, paint);
     }
+    canvas.restore();
   }
 
   @override

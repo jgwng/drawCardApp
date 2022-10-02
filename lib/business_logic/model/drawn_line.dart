@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DrawnLine {
-  final List<Offset?> path;
-  final Paint? paint;
+  final path = Path();
+  final Color? paint;
   final double width;
+  final bool isErase;
 
-  DrawnLine({
-     this.path : const [Offset(0,0)],this.paint,this.width : 2.0
-  });
+  DrawnLine(
+      {this.paint,
+      this.width: 2.0,
+      this.isErase = false});
 }

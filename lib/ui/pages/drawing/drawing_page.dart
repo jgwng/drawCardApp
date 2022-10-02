@@ -11,12 +11,7 @@ class DrawingPage extends GetView<DrawPageController>{
       body: Column(
         children: [
           Expanded(
-            child: Stack(
-              children: [
-                  buildTotalPath(),
-                  buildCurrentPath(),
-              ],
-            ),
+            child: drawPad(),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -64,6 +59,27 @@ class DrawingPage extends GetView<DrawPageController>{
     );
   }
 
+
+  Widget drawPad(){
+    return Obx((){
+      if(controller.lines.isEmpty){
+        print(controller.lines);
+      }
+      return SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: GestureDetector(
+              onPanStart: controller.onDrawStart,
+              onPanUpdate: controller.onDrawing,
+              child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    return CustomPaint(
+                      painter: Sketcher(lines: controller.lines),
+                    );
+                  }
+              )));
+    });
+  }
   Widget colorButton(Color color){
     return Flexible(
       child: GestureDetector(
@@ -73,39 +89,6 @@ class DrawingPage extends GetView<DrawPageController>{
           height: 30,
         ),
       ),
-    );
-  }
-
-  Widget buildTotalPath() {
-    return RepaintBoundary(
-      child: Obx((){
-        return CustomPaint(
-            size: Size.infinite,
-            foregroundPainter:Sketcher(
-              lines: controller.lines..toList(),
-            ));
-      }),
-    );
-  }
-
-  Widget buildCurrentPath() {
-    return GestureDetector(
-      onPanStart: (details) => controller.onDrawStart(details),
-      onPanUpdate: (details) => controller.onDrawing(details),
-      onPanEnd: (details) => controller.onDrawEnd(details),
-      child: Obx((){
-        return RepaintBoundary(
-          child: Opacity(
-            opacity: 0.99,
-            child: CustomPaint(
-              size: Size.infinite,
-              painter: Sketcher(
-                lines: [controller.line.value],
-              ),
-            ),
-          ),
-        );
-      }),
     );
   }
 

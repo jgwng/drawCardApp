@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DrawPageController extends GetxController{
-  RxList<DrawnLine?> lines = <DrawnLine?>[].obs;
-  Rx<DrawnLine?> line = DrawnLine().obs;
+  RxList<DrawnLine> lines =  RxList<DrawnLine>();
   Rx<Color> drawColor = Colors.red.obs;
   RxBool isEraseMode = false.obs;
   Paint paint = Paint();
@@ -16,38 +15,38 @@ class DrawPageController extends GetxController{
       return null;
     }
   }
-
-
-
+  @override
+  void onInit(){
+    super.onInit();
+    lines.add(DrawnLine());
+    lines.removeLast();
+  }
   void clearScreen(){
-    line.value =  DrawnLine();
     lines.clear();
   }
 
   void onDrawStart(DragStartDetails details){
-    RenderBox box = Get.context!.findRenderObject() as RenderBox;
-    Offset point = box.globalToLocal(details.globalPosition);
+    final startX = details.globalPosition.dx;
+    final startY = details.globalPosition.dy;
 
-    paint = Paint()..color = (isEraseMode.isTrue) ? Colors.white : drawColor.value
-      ..isAntiAlias = true
-      ..strokeWidth = 2.0;
-    line.value = DrawnLine(path : [point], paint : paint, width : paint.strokeWidth);
+    final stroke = DrawnLine(
+      paint: drawColor.value,
+      width: 4.0,
+      isErase: isEraseMode.value
+    );
+    print(stroke);
+    stroke.path.moveTo(startX, startY);
+    lines.add(stroke);
+
   }
 
   void onDrawing(DragUpdateDetails details){
-    RenderBox box = Get.context!.findRenderObject()  as RenderBox;
-    Offset point = box.globalToLocal(details.globalPosition);
-
-    List<Offset> path = List.from(line.value!.path)..add(point);
-    paint = Paint()..color = (isEraseMode.isTrue) ? Colors.white : drawColor.value
-      ..isAntiAlias = true
-      ..strokeWidth = 2.0;
-    line.value = DrawnLine(path :path, paint : paint, width :paint.strokeWidth);
+    final endX = details.globalPosition.dx;
+    final endY = details.globalPosition.dy;
+    lines.last.path.lineTo(endX, endY);
+    lines.refresh();
   }
 
-  void onDrawEnd(DragEndDetails details) {
-    lines.add(line.value!);
-  }
 
   void colorChange(Color color){
     drawColor.value = color;
