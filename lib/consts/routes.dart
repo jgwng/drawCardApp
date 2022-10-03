@@ -16,6 +16,7 @@ class Routes{
   //드로잉,컬러링 이미지 선택 화면
   static const String imageSelect = '/select';
   static const String drawing = '/drawing';
+  static const String pixelArt = '/pixelArt';
 
   //설정 화면
   static const String setting = '/setting';

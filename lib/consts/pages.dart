@@ -10,6 +10,7 @@ import 'package:drawcard/ui/pages/home/home_page.dart';
 import 'package:drawcard/ui/pages/home/views/favorite_view.dart';
 import 'package:drawcard/ui/pages/home/views/recent_view.dart';
 import 'package:drawcard/ui/pages/home/views/total_view.dart';
+import 'package:drawcard/ui/pages/pixel/pixel_art.dart';
 import 'package:drawcard/ui/pages/splash/splash_page.dart';
 import '../ui/pages/auth/auth_page.dart';
 import '../ui/pages/auth/login_page.dart';
@@ -64,6 +65,10 @@ class AppPages{
         name : Routes.favorite,
         binding: FavoritePageBinding(),
         page: () =>FavoriteView()
+    ),
+    GetPage(
+        name : Routes.pixelArt,
+        page: () => PixelArt()
     ),
   ];
 }
