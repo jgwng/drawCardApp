@@ -77,11 +77,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin,TabBa
           child:  FloatingActionButton(
             backgroundColor: Colors.black,
             onPressed: (){
-              Get.toNamed(Routes.pixelArt);
-              // Get.dialog(MenuSelectDialog(),barrierDismissible : false,
-              //     barrierColor:null,
-              //     useSafeArea: true
-              // );
+              // Get.toNamed(Routes.pixelArt);
+              Get.dialog(MenuSelectDialog(),barrierDismissible : false,
+                  barrierColor:null,
+                  useSafeArea: true
+              );
             },
             child: Icon(Icons.add_rounded,size: 40),
           ),

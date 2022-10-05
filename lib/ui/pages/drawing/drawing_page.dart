@@ -3,7 +3,7 @@ import 'package:drawcard/painter/sketcher.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class DrawingPage extends GetView<DrawPageController>{
+class DrawingPage extends GetView<DrawPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,18 +13,25 @@ class DrawingPage extends GetView<DrawPageController>{
           Expanded(
             child: drawPad(),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              colorButton(Colors.red),
-              colorButton(Colors.yellow),
-              colorButton(Colors.green),
-              colorButton(Colors.purple),
-              colorButton(Colors.brown),
-              colorButton(Colors.grey),
-            ],
+          Container(
+            height: 80,
+            width: Get.width,
+            child: Center(
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                scrollDirection: Axis.horizontal,
+                physics: ClampingScrollPhysics(),
+                itemCount: controller.palette.length,
+                itemBuilder: (ctx, i) {
+                  return colorButton(controller.palette[i]);
+                },
+                separatorBuilder: (ctx, i) {
+                  return SizedBox(width: 20);
+                },
+              ),
+            ),
           ),
-          Obx((){
+          Obx(() {
             return GestureDetector(
               onTap: () => controller.toggleEraseMode(),
               child: Container(
@@ -48,9 +55,9 @@ class DrawingPage extends GetView<DrawPageController>{
               height: 40,
               color: Colors.blue,
               alignment: Alignment.center,
-              child: Text('초기화',style: TextStyle(
-                fontSize: 20,
-                color: Colors.white
+              child: Text('초기화', style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white
               ),),
             ),
           )
@@ -60,9 +67,9 @@ class DrawingPage extends GetView<DrawPageController>{
   }
 
 
-  Widget drawPad(){
-    return Obx((){
-      if(controller.lines.isEmpty){
+  Widget drawPad() {
+    return Obx(() {
+      if (controller.lines.isEmpty) {
         print(controller.lines);
       }
       return SizedBox(
@@ -80,14 +87,22 @@ class DrawingPage extends GetView<DrawPageController>{
               )));
     });
   }
-  Widget colorButton(Color color){
-    return Flexible(
-      child: GestureDetector(
-        onTap: () => controller.colorChange(color),
-        child: Container(
-          color: color,
-          height: 30,
+
+  Widget colorButton(Color color) {
+    return GestureDetector(
+      onTap: () => controller.colorChange(color),
+      child: Container(
+        height: 50,
+        width: 50,
+        decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle
         ),
+        alignment: Alignment.center,
+        child: Obx(() {
+          return controller.drawColor.value == color ? Icon(Icons
+              .brush,color: Colors.white) : SizedBox();
+        }),
       ),
     );
   }
