@@ -40,8 +40,8 @@ class DrawPageController extends GetxController {
   }
 
   void onDrawStart(DragStartDetails details) {
-    final startX = details.globalPosition.dx;
-    final startY = details.globalPosition.dy;
+    final startX = details.globalPosition.dx-12;
+    final startY = details.globalPosition.dy-Get.mediaQuery.padding.top-12-40;
 
     final stroke = DrawnLine(
         paint: drawColor.value, width: 4.0, isErase: isEraseMode.value);
@@ -51,17 +51,19 @@ class DrawPageController extends GetxController {
   }
 
   void onDrawing(DragUpdateDetails details) {
-    final endX = details.globalPosition.dx;
-    final endY = details.globalPosition.dy;
+    final endX = details.globalPosition.dx-12;
+    final endY = details.globalPosition.dy-Get.mediaQuery.padding.top-12-40;
     lines.last.path.lineTo(endX, endY);
     lines.refresh();
   }
 
   void colorChange(Color color) {
     drawColor.value = color;
+    isEraseMode.value = false;
   }
 
   void toggleEraseMode() {
+    print('erase');
     isEraseMode.toggle();
   }
 }

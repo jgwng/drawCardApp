@@ -54,7 +54,7 @@ class _PixelArtState extends State<PixelArt>{
         RenderBox _box = gridItemKey.currentContext?.findRenderObject() as RenderBox;
         RenderBox _boxGrid = gridKey.currentContext?.findRenderObject() as RenderBox;
 
-        Offset position = _boxGrid.localToGlobal(Offset.zero) ?? Offset(0,0); //this is global position
+        Offset position = _boxGrid.localToGlobal(Offset.zero); //this is global position
         double gridLeft = position.dx;
         double gridTop = position.dy;
 

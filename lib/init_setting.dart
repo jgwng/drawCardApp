@@ -7,6 +7,6 @@ Future<void> initAppSetting() async{
 
   // 서버나 SharedPreferences 등 비동기로 데이터를 다룬 다음 runApp을 실행해야하는 경우
   WidgetsFlutterBinding.ensureInitialized();
-  GestureBinding.instance!.resamplingEnabled = false;
+  GestureBinding.instance.resamplingEnabled = false;
 
 }
