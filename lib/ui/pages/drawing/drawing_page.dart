@@ -100,12 +100,44 @@ class DrawingPage extends GetView<DrawPageController> {
                             );
                           }),
                           InkWell(
+                            onTap: () => controller.clearScreen(),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  color: Colors.white, shape: BoxShape.circle),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.black,
+                                size: 25 ,
+                              ),
+                            ),
+                          ),
+                          InkWell(
                             onTap: () {},
                             child: Container(
                               height: 50,
                               width: 50,
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
+                                  color: Colors.white, shape: BoxShape.circle),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.black,
+                                size: 25 ,
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => controller.clearScreen(),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
                                   color: Colors.white, shape: BoxShape.circle),
                               alignment: Alignment.center,
                               child: Image.asset(
@@ -131,25 +163,10 @@ class DrawingPage extends GetView<DrawPageController> {
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () => controller.clearScreen(),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  color: Colors.white, shape: BoxShape.circle),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.black,
-                                size: 25 ,
-                              ),
-                            ),
-                          )
+
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               );
@@ -158,6 +175,71 @@ class DrawingPage extends GetView<DrawPageController> {
         ),
       ),
     );
+  }
+
+  Widget colorPalette(){
+    return GestureDetector(
+      onTap: () => controller.toggleEraseMode(),
+      child: Container(
+        height: 60,
+        width: Get.width,
+        margin: EdgeInsets.symmetric(horizontal: 12)
+            .copyWith(bottom: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6.0),
+          border: Border.all(color: Colors.red),
+        ),
+        child: Center(
+          child: ListView.separated(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            scrollDirection: Axis.horizontal,
+            physics: ClampingScrollPhysics(),
+            itemCount: controller.palette.length,
+            itemBuilder: (ctx, i) {
+              return colorButton(
+                  color: controller.palette[i]);
+            },
+            separatorBuilder: (ctx, i) {
+              return SizedBox(width: 20);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget slider(){
+    return Obx((){
+      return  Container(
+        height: 60,
+        width: Get.width,
+        margin: EdgeInsets.symmetric(horizontal: 12)
+            .copyWith(bottom: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6.0),
+          border: Border.all(color: Colors.red),
+        ),
+        child: SliderTheme(
+          data: SliderTheme.of(Get.context!).copyWith(
+            activeTrackColor: Colors.red,
+            inactiveTrackColor: Colors.blue,
+            trackHeight: 3.0,
+            thumbColor: Colors.yellow,
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12),
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 32.0),
+          ),
+          child: Slider(
+              value: controller.radius.value,
+              min: 2,
+              max: 10,
+              onChanged: (value) {
+                controller.radius.value = value;
+              }),
+        ),
+      );
+    });
   }
 
   Widget drawPad() {

@@ -8,7 +8,7 @@ class DrawPageController extends GetxController {
   Rx<Color> drawColor = Colors.red.obs;
   RxBool isEraseMode = false.obs;
   Paint paint = Paint();
-
+  RxDouble radius = 2.0.obs;
   static DrawPageController? get to {
     if (Get.isRegistered<DrawPageController>()) {
       return Get.find<DrawPageController>();
