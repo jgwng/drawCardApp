@@ -8,7 +8,10 @@ class DrawPageController extends GetxController {
   Rx<Color> drawColor = Colors.red.obs;
   RxBool isEraseMode = false.obs;
   Paint paint = Paint();
-  RxDouble radius = 2.0.obs;
+  RxDouble strokeWidth = 2.5.obs;
+
+  Rx<DrawPadMenu> showMenu = DrawPadMenu.none.obs;
+
   static DrawPageController? get to {
     if (Get.isRegistered<DrawPageController>()) {
       return Get.find<DrawPageController>();
@@ -40,12 +43,16 @@ class DrawPageController extends GetxController {
   }
 
   void onDrawStart(DragStartDetails details) {
+    if(showMenu.value != DrawPadMenu.none){
+      showMenu.value = DrawPadMenu.none;
+      return;
+    }
+
     final startX = details.globalPosition.dx-12;
     final startY = details.globalPosition.dy-Get.mediaQuery.padding.top-12-40;
 
     final stroke = DrawnLine(
-        paint: drawColor.value, width: 4.0, isErase: isEraseMode.value);
-    print(stroke);
+        paint: drawColor.value, width: strokeWidth.value, isErase: isEraseMode.value);
     stroke.path.moveTo(startX, startY);
     lines.add(stroke);
   }
@@ -59,11 +66,44 @@ class DrawPageController extends GetxController {
 
   void colorChange(Color color) {
     drawColor.value = color;
-    isEraseMode.value = false;
+    showMenu.value = DrawPadMenu.none;
   }
 
   void toggleEraseMode() {
-    print('erase');
     isEraseMode.toggle();
   }
+
+  void onTapForErase() async{
+    isEraseMode.toggle();
+  }
+
+  void onTapChangeColor(){
+    if(showMenu.value == DrawPadMenu.palette){
+      showMenu.value = DrawPadMenu.none;
+    }else{
+      showMenu.value = DrawPadMenu.palette;
+    }
+  }
+
+  void onTapChangeStroke(){
+    if(showMenu.value == DrawPadMenu.stroke){
+      showMenu.value = DrawPadMenu.none;
+    }else{
+      showMenu.value = DrawPadMenu.stroke;
+    }
+  }
+
+  void onTapExitPage(){
+    if(lines.isNotEmpty){
+      Get.back();
+    }else{
+      Get.back();
+    }
+  }
+}
+
+enum DrawPadMenu{
+  palette,
+  stroke,
+  none
 }
