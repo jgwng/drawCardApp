@@ -4,7 +4,7 @@ class Routes{
   static const String splash = '/splash';
 
   // 로그인,회원 가입 화면
-  static const String auth = '/auth';
+  static const String signUp = '/signUp';
   static const String login = '/login';
 
   //메인 홈 화면

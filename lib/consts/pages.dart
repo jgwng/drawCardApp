@@ -2,9 +2,12 @@ import 'package:drawcard/business_logic/binding/auth_page_binding.dart';
 import 'package:drawcard/business_logic/binding/draw_page_binding.dart';
 import 'package:drawcard/business_logic/binding/favorite_page_binding.dart';
 import 'package:drawcard/business_logic/binding/home_page_binding.dart';
+import 'package:drawcard/business_logic/binding/login_binding.dart';
 import 'package:drawcard/business_logic/binding/recent_page_binding.dart';
+import 'package:drawcard/business_logic/binding/sign_up_binding.dart';
 import 'package:drawcard/business_logic/binding/total_page_binding.dart';
 import 'package:drawcard/consts/routes.dart';
+import 'package:drawcard/ui/pages/auth/sign_up_page.dart';
 import 'package:drawcard/ui/pages/drawing/drawing_page.dart';
 import 'package:drawcard/ui/pages/home/home_page.dart';
 import 'package:drawcard/ui/pages/home/views/favorite_view.dart';
@@ -30,12 +33,13 @@ class AppPages{
       binding: DrawPageBinding()
     ),
     GetPage(
-      name : Routes.auth,
-      page: () => AuthPage(),
-      binding: AuthPageBinding()
+      name : Routes.signUp,
+      page: () => SignUpPage(),
+      binding: SignUpBinding()
     ),
     GetPage(
         name : Routes.login,
+        binding: LoginBindings(),
         page: () => LoginPage()
     ),
     GetPage(

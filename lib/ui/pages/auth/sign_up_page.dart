@@ -1,74 +1,118 @@
-import 'package:drawcard/business_logic/controller/auth_page/auth_page_controller.dart';
-import 'widget/auth_tft.dart';
-import 'package:flutter/gestures.dart';
+import 'package:drawcard/business_logic/controller/auth_page/sign_up_controller.dart';
+import 'package:drawcard/ui/widget/draw_pad_button.dart';
+import 'package:drawcard/ui/widget/draw_pad_tft.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignUpPage extends StatefulWidget{
-  @override
-  _SignUpPageState createState() => _SignUpPageState();
-}
+class SignUpPage extends GetView<SignUpController> {
+  const SignUpPage({Key? key}) : super(key: key);
 
-class _SignUpPageState extends State<SignUpPage>{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: (){
-          FocusScope.of(context).unfocus();
+    return GestureDetector(
+      onTap: () => Get.focusScope?.unfocus(),
+      child: WillPopScope(
+        onWillPop: () {
+          Get.focusScope?.unfocus();
+          Get.back();
+          return Future.value(false);
         },
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              //닉네임
-              AuthTFT(labelText : '닉네임', controller: TextEditingController(),),
-              SizedBox(height: 50,),
-              // 비밀번호
-              AuthTFT(labelText : '이메일', controller: TextEditingController(),),
-              SizedBox(height: 50,),
-              // 비밀번호
-              AuthTFT(labelText : '비밀번호', controller: TextEditingController(),),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Divider(height: 1,thickness: 1,color: Colors.grey[300],),
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: CustomScrollView(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      slivers: [
+                        const SliverToBoxAdapter(
+                          child: SizedBox(),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 20),
+                            alignment: Alignment.centerLeft,
+                            child: const Text(
+                              '간편하게 가입하고\n기다리고 있는 클럽원들\n만나러 가세요!',
+                              style:
+                                  TextStyle(fontSize: 24, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 60, bottom: 40),
+                            child: Form(
+                              key: controller.emailKey,
+                              child: DrawPadTFT(
+                                controller: controller.emailController,
+                                node: controller.emailNode,
+                                validator: controller.emailValidator,
+                                onFieldSubmitted: (String? email) async {
+                                  await controller.emailCheck();
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Form(
+                              key: controller.pwKey,
+                              child: DrawPadTFT(
+                                controller: controller.pwController,
+                                node: controller.pwNode,
+                                validator: controller.validatePassword,
+                                isPW: true,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: DrawPadTFT(
+                              controller: controller.mobileController,
+                              node: controller.mobileNode,
+                            ),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Form(
+                            key: controller.nicknameKey,
+                            child: Padding(
+                                padding: const EdgeInsets.only(bottom: 40),
+                                child: DrawPadTFT(
+                                  controller: controller.nicknameController,
+                                  node: controller.nicknameNode,
+                                  validator: controller.nicknameValidator,
+                                )),
+                          ),
+                        ),
+                        const SliverToBoxAdapter(
+                          child: Text('* 핸드폰번호는 선택사항입니다.',
+                              style: TextStyle(color: Colors.white)),
+                        )
+                      ],
+                    ),
+                  ),
+                  DrawPadButton(
+                    btnText: '회원 가입',
+                    onTap: controller.onTapRegUser,
+                    isReady: true,
+                  ),
+                ],
               ),
-              GestureDetector(
-                onTap: (){},
-                child: Container(
-                  height: 60,
-                  width: Get.width,
-                  alignment: Alignment.center,
-                  color: Colors.grey[200],
-                  child: Text('회원가입',style: TextStyle(
-                      fontSize: 16,color: Colors.black,fontWeight: FontWeight.w500
-                  ),),
-                ),
-              ),
-              SizedBox(height:30),
-              RichText(
-                text: TextSpan(text:'이미 회원가입을 하셨나요?',
-                    style: TextStyle(color: Colors.black,fontSize: 10),
-                    children:[
-                      TextSpan(text: '로그인하기', recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-                          AuthPageController.to.tabController.index = 0;
-                        }),
-                    ]),
-              )
-            ],
+            ),
           ),
         ),
       ),
     );
   }
-
 }
