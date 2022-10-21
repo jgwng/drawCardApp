@@ -1,3 +1,4 @@
+import 'package:drawcard/consts/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -18,5 +19,6 @@ class LoginController extends GetxController {
   }
 
   void onTapForTest() async {
+    Get.offAndToNamed(Routes.home);
   }
 }

@@ -9,9 +9,6 @@ class Routes{
 
   //메인 홈 화면
   static const String home = '/home';
-  static const String favorite = '/favorite';
-  static const String recent = '/recent';
-  static const String total = '/total';
 
   //드로잉,컬러링 이미지 선택 화면
   static const String imageSelect = '/select';

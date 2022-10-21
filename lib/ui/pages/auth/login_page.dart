@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:drawcard/business_logic/controller/auth_page/login_controller.dart';
 import 'package:drawcard/ui/widget/draw_pad_button.dart';
 import 'package:drawcard/ui/widget/draw_pad_tft.dart';
@@ -25,20 +27,26 @@ class LoginPage extends GetView<LoginController> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children:  [
                     Text(
-                      '연습장',
+                      '드로잉북',
                       style: TextStyle(
                           fontSize: 28,
-                          fontStyle: FontStyle.italic,
+                        fontFeatures: [
+                          FontFeature.tabularFigures()
+                        ],
                           color: Colors.white),
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
-                      '나만의 그림을 그리기 위해 로그인 해주세요.',
-                      style: TextStyle(fontSize: 14, color: Colors.white),
+                      '나만의 그림 연습장',
+                      style: TextStyle(fontSize: 14,
+                          fontFeatures: [
+                            FontFeature.tabularFigures()
+                          ],
+                          color: Colors.white),
                     )
                   ],
                 ),

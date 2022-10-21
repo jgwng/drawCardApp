@@ -10,12 +10,8 @@ import 'package:drawcard/consts/routes.dart';
 import 'package:drawcard/ui/pages/auth/sign_up_page.dart';
 import 'package:drawcard/ui/pages/drawing/drawing_page.dart';
 import 'package:drawcard/ui/pages/home/home_page.dart';
-import 'package:drawcard/ui/pages/home/views/favorite_view.dart';
-import 'package:drawcard/ui/pages/home/views/recent_view.dart';
-import 'package:drawcard/ui/pages/home/views/total_view.dart';
 import 'package:drawcard/ui/pages/pixel/pixel_art.dart';
 import 'package:drawcard/ui/pages/splash/splash_page.dart';
-import '../ui/pages/auth/auth_page.dart';
 import '../ui/pages/auth/login_page.dart';
 import '../ui/pages/coloring/coloring_sample_page.dart';
 import '../ui/pages/setting/setting_page.dart';
@@ -54,21 +50,6 @@ class AppPages{
     GetPage(
         name : Routes.setting,
         page: () =>SettingPage()
-    ),
-    GetPage(
-        name : Routes.total,
-        binding: TotalPageBinding(),
-        page: () =>TotalView()
-    ),
-    GetPage(
-        name : Routes.recent,
-        binding: RecentPageBinding(),
-        page: () =>RecentView()
-    ),
-    GetPage(
-        name : Routes.favorite,
-        binding: FavoritePageBinding(),
-        page: () =>FavoriteView()
     ),
     GetPage(
         name : Routes.pixelArt,
