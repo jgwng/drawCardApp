@@ -1,4 +1,4 @@
-class Routes{
+class Routes {
   Routes._();
   //스플래시 화면
   static const String splash = '/splash';

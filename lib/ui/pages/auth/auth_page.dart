@@ -6,8 +6,7 @@ import 'sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AuthPage extends GetView<AuthPageController> with TabBarMixin{
-
+class AuthPage extends GetView<AuthPageController> with TabBarMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,12 +24,11 @@ class AuthPage extends GetView<AuthPageController> with TabBarMixin{
                   width: 200,
                   child: TabBar(
                     tabs: [
-                      menuTab('로그인',80),
-                      menuTab('회원가입',80),
+                      menuTab('로그인', 80),
+                      menuTab('회원가입', 80),
                     ],
-                    unselectedLabelStyle: AppThemes.textTheme.bodyText1!.copyWith(
-                        color: Colors.grey[400]
-                    ),
+                    unselectedLabelStyle: AppThemes.textTheme.bodyText1!
+                        .copyWith(color: Colors.grey[400]),
                     labelStyle: AppThemes.textTheme.bodyText1,
                     labelColor: Colors.black,
                     unselectedLabelColor: Colors.grey[400],
@@ -42,10 +40,7 @@ class AuthPage extends GetView<AuthPageController> with TabBarMixin{
               child: TabBarView(
                 controller: controller.tabController,
                 physics: NeverScrollableScrollPhysics(),
-                children: [
-                  LoginPage(),
-                  SignUpPage()
-                ],
+                children: [LoginPage(), SignUpPage()],
               ),
             )
           ],
@@ -53,6 +48,4 @@ class AuthPage extends GetView<AuthPageController> with TabBarMixin{
       ),
     );
   }
-
-
 }

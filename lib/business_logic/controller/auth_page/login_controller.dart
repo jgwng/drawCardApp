@@ -10,12 +10,9 @@ class LoginController extends GetxController {
   FocusNode pwNode = FocusNode();
 
   void login() async {
-    if (emailController.text.isEmpty) {
-    }
+    if (emailController.text.isEmpty) {}
 
-    if (pwController.text.isEmpty) {
-    }
-
+    if (pwController.text.isEmpty) {}
   }
 
   void onTapForTest() async {

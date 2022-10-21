@@ -27,14 +27,12 @@ class LoginPage extends GetView<LoginController> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children:  [
+                  children: [
                     Text(
                       '드로잉북',
                       style: TextStyle(
                           fontSize: 28,
-                        fontFeatures: [
-                          FontFeature.tabularFigures()
-                        ],
+                          fontFeatures: [FontFeature.tabularFigures()],
                           color: Colors.white),
                     ),
                     SizedBox(
@@ -42,10 +40,9 @@ class LoginPage extends GetView<LoginController> {
                     ),
                     Text(
                       '나만의 그림 연습장',
-                      style: TextStyle(fontSize: 14,
-                          fontFeatures: [
-                            FontFeature.tabularFigures()
-                          ],
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFeatures: [FontFeature.tabularFigures()],
                           color: Colors.white),
                     )
                   ],
@@ -70,7 +67,7 @@ class LoginPage extends GetView<LoginController> {
                 const SizedBox(
                   height: 10,
                 ),
-                loginButton(title: '테스트',isTest: true),
+                loginButton(title: '테스트', isTest: true),
               ],
             ),
           ),
@@ -79,7 +76,7 @@ class LoginPage extends GetView<LoginController> {
     );
   }
 
-  Widget loginButton({required String title,bool isTest = false}) {
+  Widget loginButton({required String title, bool isTest = false}) {
     return DrawPadButton(
       onTap: (isTest) ? controller.onTapForTest : controller.login,
       isReady: true,

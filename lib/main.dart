@@ -4,7 +4,7 @@ import 'package:drawcard/init_setting.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-void main() async{
+void main() async {
   await initAppSetting();
   runApp(MyApp());
 }
@@ -22,4 +22,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

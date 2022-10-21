@@ -2,12 +2,12 @@ import 'package:drawcard/consts/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ImageSelectPage extends StatefulWidget{
+class ImageSelectPage extends StatefulWidget {
   @override
   _ImageSelectPageState createState() => _ImageSelectPageState();
 }
 
-class _ImageSelectPageState extends State<ImageSelectPage>{
+class _ImageSelectPageState extends State<ImageSelectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,18 +15,20 @@ class _ImageSelectPageState extends State<ImageSelectPage>{
       appBar: appBar,
       body: Column(
         children: [
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           //카테고리별 분류를 위한 메뉴바
           Container(
             height: 40,
             padding: EdgeInsets.only(left: 20),
             margin: EdgeInsets.only(bottom: 20),
             child: ListView.separated(
-              separatorBuilder: (ctx,i){
+              separatorBuilder: (ctx, i) {
                 return SizedBox(width: 20);
               },
               scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx,i) {
+              itemBuilder: (ctx, i) {
                 return categoryMenu('전체');
               },
               itemCount: 5,
@@ -38,17 +40,17 @@ class _ImageSelectPageState extends State<ImageSelectPage>{
             thickness: 1,
             color: Colors.grey[400],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           //선택할수 있는 예시 이미지 리스트
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 20
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: GridView.builder(
                 itemCount: 10,
                 physics: ScrollPhysics(),
-                itemBuilder: (ctx,i){
+                itemBuilder: (ctx, i) {
                   return sampleItem('거북이');
                 },
                 shrinkWrap: true,
@@ -65,46 +67,57 @@ class _ImageSelectPageState extends State<ImageSelectPage>{
     );
   }
 
-  Widget categoryMenu(String title){
+  Widget categoryMenu(String title) {
     return Container(
       width: 60,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        border: Border.all(color: Colors.black)
-      ),
+          borderRadius: BorderRadius.circular(6.0),
+          border: Border.all(color: Colors.black)),
       child: Text(title),
     );
   }
 
-  PreferredSizeWidget get appBar{
+  PreferredSizeWidget get appBar {
     return AppBar(
-      leading:Theme(
+      leading: Theme(
           data: ThemeData(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
           ),
           child: IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(Icons.arrow_back_ios_outlined,color: Colors.black,),
+            icon: Icon(
+              Icons.arrow_back_ios_outlined,
+              color: Colors.black,
+            ),
           )),
       elevation: 0,
       titleSpacing: 0,
       backgroundColor: Colors.white,
-      title: Text('컬러링',
-        textScaleFactor : 1.0,
-        style: AppThemes.textTheme.headline2,),
+      title: Text(
+        '컬러링',
+        textScaleFactor: 1.0,
+        style: AppThemes.textTheme.headline2,
+      ),
     );
   }
 
-  Widget sampleItem(String title){
+  Widget sampleItem(String title) {
     return Column(
       children: [
-       Image.asset('assets/images/drawing.png',
-       width: 100,
-       height: 100,),
-        SizedBox(height: 10,),
-        Text(title,style: AppThemes.textTheme.subtitle1,)
+        Image.asset(
+          'assets/images/drawing.png',
+          width: 100,
+          height: 100,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          title,
+          style: AppThemes.textTheme.subtitle1,
+        )
       ],
     );
   }

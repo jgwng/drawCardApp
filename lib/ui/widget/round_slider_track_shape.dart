@@ -89,9 +89,11 @@ class RoundSliderTrackShape extends SliderTrackShape {
     // TODO(clocksmith): The new Material spec has a gray circle in place of this gap.
     double horizontalAdjustment = 0.0;
     if (!isEnabled!) {
-      final double disabledThumbRadius =
-          (sliderTheme?.thumbShape?.getPreferredSize(false, isDiscrete ?? false).width ?? 0) /
-              2.0;
+      final double disabledThumbRadius = (sliderTheme?.thumbShape
+                  ?.getPreferredSize(false, isDiscrete ?? false)
+                  .width ??
+              0) /
+          2.0;
       final double gap = disabledThumbGapWidth * (1.0 - enableAnimation.value);
       horizontalAdjustment = disabledThumbRadius + gap;
     }
@@ -113,8 +115,9 @@ class RoundSliderTrackShape extends SliderTrackShape {
         -pi * 3 / 2, // -270 degrees
         pi, // 180 degrees
         false,
-        trackRect.left -( thumbCenter?.dx ?? 0) == 0.0
-            ? rightTrackPaint: leftTrackPaint);
+        trackRect.left - (thumbCenter?.dx ?? 0) == 0.0
+            ? rightTrackPaint
+            : leftTrackPaint);
 
     // Right Arc
     context.canvas.drawArc(

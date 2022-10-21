@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class TotalPageController extends GetxController{
+class TotalPageController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
@@ -8,11 +8,9 @@ class TotalPageController extends GetxController{
     print('totalPageController onInit');
   }
 
-
   @override
-  void onReady(){
+  void onReady() {
     super.onReady();
     print('totalPageController onReady');
   }
-
 }

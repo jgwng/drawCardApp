@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 
 class PreviewDrawCard extends StatelessWidget {
   const PreviewDrawCard(
-      {this.imageAddress = '',
-      this.isFavorite = false,
-      this.onToggleFavorite});
+      {this.imageAddress = '', this.isFavorite = false, this.onToggleFavorite});
 
   final String? imageAddress;
   final bool? isFavorite;
@@ -24,10 +22,12 @@ class PreviewDrawCard extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(6.0),
                 border: Border.all(color: Colors.grey, width: 2)),
-            child: (imageAddress?.isEmpty ?? true) ? SizedBox() : Image.asset(
-              imageAddress!,
-              fit: BoxFit.fitWidth,
-            ),
+            child: (imageAddress?.isEmpty ?? true)
+                ? SizedBox()
+                : Image.asset(
+                    imageAddress!,
+                    fit: BoxFit.fitWidth,
+                  ),
           ),
           Positioned(
             right: 10,

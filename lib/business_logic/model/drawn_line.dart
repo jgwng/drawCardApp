@@ -6,8 +6,5 @@ class DrawnLine {
   final double width;
   final bool isErase;
 
-  DrawnLine(
-      {this.paint,
-      this.width: 2.0,
-      this.isErase = false});
+  DrawnLine({this.paint, this.width: 2.0, this.isErase = false});
 }

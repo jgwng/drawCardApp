@@ -11,9 +11,9 @@ class DrawingPage extends GetView<DrawPageController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        if(Platform.isIOS){
+        if (Platform.isIOS) {
           return Future.value(false);
-        }else{
+        } else {
           return Future.value(false);
         }
       },
@@ -57,7 +57,7 @@ class DrawingPage extends GetView<DrawPageController> {
     );
   }
 
-  Widget bottomMenu(){
+  Widget bottomMenu() {
     return Obx(() {
       return Positioned(
         bottom: 0,
@@ -86,8 +86,7 @@ class DrawingPage extends GetView<DrawPageController> {
                     return InkWell(
                       onTap: controller.onTapChangeColor,
                       child: colorButton(
-                          color: controller.drawColor.value,
-                          isStandard: true),
+                          color: controller.drawColor.value, isStandard: true),
                     );
                   }),
                   InkWell(
@@ -97,17 +96,16 @@ class DrawingPage extends GetView<DrawPageController> {
                       width: 50,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
-                          color: Colors.white, shape: BoxShape.circle),
+                          color: Colors.white,
+                          shape: BoxShape.circle),
                       alignment: Alignment.center,
-                      child: Obx((){
+                      child: Obx(() {
                         return Text(
                             '${controller.strokeWidth.value.toStringAsFixed(1)}',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16
-                            )
-                        );
+                                fontSize: 16));
                       }),
                     ),
                   ),
@@ -118,12 +116,13 @@ class DrawingPage extends GetView<DrawPageController> {
                       width: 50,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
-                          color: Colors.white, shape: BoxShape.circle),
+                          color: Colors.white,
+                          shape: BoxShape.circle),
                       alignment: Alignment.center,
                       child: Icon(
                         Icons.camera_alt,
                         color: Colors.black,
-                        size: 25 ,
+                        size: 25,
                       ),
                     ),
                   ),
@@ -134,7 +133,8 @@ class DrawingPage extends GetView<DrawPageController> {
                       width: 50,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
-                          color: Colors.white, shape: BoxShape.circle),
+                          color: Colors.white,
+                          shape: BoxShape.circle),
                       alignment: Alignment.center,
                       child: Image.asset(
                         'assets/images/eraser.png',
@@ -150,16 +150,16 @@ class DrawingPage extends GetView<DrawPageController> {
                       width: 50,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
-                          color: Colors.white, shape: BoxShape.circle),
+                          color: Colors.white,
+                          shape: BoxShape.circle),
                       alignment: Alignment.center,
                       child: Icon(
                         Icons.delete,
                         color: Colors.black,
-                        size: 25 ,
+                        size: 25,
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -169,9 +169,9 @@ class DrawingPage extends GetView<DrawPageController> {
     });
   }
 
-  Widget drawPadOption(){
-    return Obx((){
-      switch(controller.showMenu.value){
+  Widget drawPadOption() {
+    return Obx(() {
+      switch (controller.showMenu.value) {
         case DrawPadMenu.palette:
           return colorPalette();
         case DrawPadMenu.stroke:
@@ -182,12 +182,11 @@ class DrawingPage extends GetView<DrawPageController> {
     });
   }
 
-  Widget colorPalette(){
+  Widget colorPalette() {
     return Container(
       height: 60,
       width: Get.width,
-      margin: EdgeInsets.symmetric(horizontal: 12)
-          .copyWith(bottom: 10),
+      margin: EdgeInsets.symmetric(horizontal: 12).copyWith(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(6.0),
@@ -200,8 +199,7 @@ class DrawingPage extends GetView<DrawPageController> {
           physics: ClampingScrollPhysics(),
           itemCount: controller.palette.length,
           itemBuilder: (ctx, i) {
-            return colorButton(
-                color: controller.palette[i]);
+            return colorButton(color: controller.palette[i]);
           },
           separatorBuilder: (ctx, i) {
             return SizedBox(width: 20);
@@ -211,13 +209,12 @@ class DrawingPage extends GetView<DrawPageController> {
     );
   }
 
-  Widget slider(){
-    return Obx((){
-      return  Container(
+  Widget slider() {
+    return Obx(() {
+      return Container(
         height: 60,
         width: Get.width,
-        margin: EdgeInsets.symmetric(horizontal: 12)
-            .copyWith(bottom: 10),
+        margin: EdgeInsets.symmetric(horizontal: 12).copyWith(bottom: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(6.0),

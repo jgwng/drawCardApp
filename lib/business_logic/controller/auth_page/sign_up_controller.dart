@@ -59,11 +59,7 @@ class SignUpController extends GetxController {
     }
   }
 
-  Future<void> emailCheck() async {
+  Future<void> emailCheck() async {}
 
-  }
-
-  void onTapRegUser() async {
-
-  }
+  void onTapRegUser() async {}
 }

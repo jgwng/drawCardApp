@@ -11,7 +11,8 @@ class Sketcher extends CustomPainter {
     for (final stroke in lines) {
       final paint = Paint()
         ..strokeWidth = stroke.width
-        ..color = (stroke.isErase) ? Colors.transparent : stroke.paint ?? Colors.red
+        ..color =
+            (stroke.isErase) ? Colors.transparent : stroke.paint ?? Colors.red
         ..strokeCap = StrokeCap.round
         ..style = PaintingStyle.stroke
         ..blendMode = (stroke.isErase) ? BlendMode.clear : BlendMode.srcOver;

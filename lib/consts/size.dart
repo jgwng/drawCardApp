@@ -1,14 +1,14 @@
 import 'dart:ui';
-class UISize{
 
+class UISize {
   static UISize _instance = UISize._internal();
   factory UISize() => _instance;
 
-  UISize._internal(){
+  UISize._internal() {
     appSizeCheck();
   }
 
-  Size size =Size(0,0);
+  Size size = Size(0, 0);
   double _baseHeight = 812;
   double _baseWidth = 375;
   double? availableHeight;
@@ -17,7 +17,7 @@ class UISize{
   double? deviceWidth;
   double? deviceHeight;
 
-  void appSizeCheck(){
+  void appSizeCheck() {
     size = window.physicalSize;
     deviceWidth = size.width;
     deviceHeight = size.height;
@@ -25,23 +25,24 @@ class UISize{
     var padding = window.padding;
     var paddingTop = padding.top;
     var paddingBottom = padding.bottom;
-    availableHeight = size.height - paddingTop- paddingBottom;
+    availableHeight = size.height - paddingTop - paddingBottom;
   }
 
-  double width(double widgetWidth){
+  double width(double widgetWidth) {
     return (widgetWidth / deviceWidth!) * _baseWidth;
   }
 
-  double height(double widgetHeight){
-    return (widgetHeight/ deviceHeight!) * _baseHeight;
+  double height(double widgetHeight) {
+    return (widgetHeight / deviceHeight!) * _baseHeight;
   }
 }
 
-extension UISizeDoubleExtension on num{
-  double get w{
+extension UISizeDoubleExtension on num {
+  double get w {
     return UISize().width(this.toDouble());
   }
-  double get h{
+
+  double get h {
     return UISize().height(this.toDouble());
   }
 }

@@ -43,23 +43,27 @@ class DrawPageController extends GetxController {
   }
 
   void onDrawStart(DragStartDetails details) {
-    if(showMenu.value != DrawPadMenu.none){
+    if (showMenu.value != DrawPadMenu.none) {
       showMenu.value = DrawPadMenu.none;
       return;
     }
 
-    final startX = details.globalPosition.dx-12;
-    final startY = details.globalPosition.dy-Get.mediaQuery.padding.top-12-40;
+    final startX = details.globalPosition.dx - 12;
+    final startY =
+        details.globalPosition.dy - Get.mediaQuery.padding.top - 12 - 40;
 
     final stroke = DrawnLine(
-        paint: drawColor.value, width: strokeWidth.value, isErase: isEraseMode.value);
+        paint: drawColor.value,
+        width: strokeWidth.value,
+        isErase: isEraseMode.value);
     stroke.path.moveTo(startX, startY);
     lines.add(stroke);
   }
 
   void onDrawing(DragUpdateDetails details) {
-    final endX = details.globalPosition.dx-12;
-    final endY = details.globalPosition.dy-Get.mediaQuery.padding.top-12-40;
+    final endX = details.globalPosition.dx - 12;
+    final endY =
+        details.globalPosition.dy - Get.mediaQuery.padding.top - 12 - 40;
     lines.last.path.lineTo(endX, endY);
     lines.refresh();
   }
@@ -73,37 +77,33 @@ class DrawPageController extends GetxController {
     isEraseMode.toggle();
   }
 
-  void onTapForErase() async{
+  void onTapForErase() async {
     isEraseMode.toggle();
   }
 
-  void onTapChangeColor(){
-    if(showMenu.value == DrawPadMenu.palette){
+  void onTapChangeColor() {
+    if (showMenu.value == DrawPadMenu.palette) {
       showMenu.value = DrawPadMenu.none;
-    }else{
+    } else {
       showMenu.value = DrawPadMenu.palette;
     }
   }
 
-  void onTapChangeStroke(){
-    if(showMenu.value == DrawPadMenu.stroke){
+  void onTapChangeStroke() {
+    if (showMenu.value == DrawPadMenu.stroke) {
       showMenu.value = DrawPadMenu.none;
-    }else{
+    } else {
       showMenu.value = DrawPadMenu.stroke;
     }
   }
 
-  void onTapExitPage(){
-    if(lines.isNotEmpty){
+  void onTapExitPage() {
+    if (lines.isNotEmpty) {
       Get.back();
-    }else{
+    } else {
       Get.back();
     }
   }
 }
 
-enum DrawPadMenu{
-  palette,
-  stroke,
-  none
-}
+enum DrawPadMenu { palette, stroke, none }

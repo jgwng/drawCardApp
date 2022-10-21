@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PixelArt extends StatefulWidget{
+class PixelArt extends StatefulWidget {
   @override
   _PixelArtState createState() => _PixelArtState();
 }
 
-class _PixelArtState extends State<PixelArt>{
-
+class _PixelArtState extends State<PixelArt> {
   GlobalKey gridKey = new GlobalKey();
 
   List<List<String>> gridState = [
@@ -22,23 +21,24 @@ class _PixelArtState extends State<PixelArt>{
     ["", "", "", "", "", "", "", "", "", ""],
   ];
 
-
   Widget _buildBody() {
     int gridStateLength = gridState.length;
     return Column(children: <Widget>[
-      AspectRatio(aspectRatio: 1.0,
-      child: Container(
-        padding: EdgeInsets.all(20.0),
-        child: GridView.builder(
-          key: gridKey,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: gridStateLength,
-            //childAspectRatio: 8.0 / 11.9
+      AspectRatio(
+        aspectRatio: 1.0,
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: GridView.builder(
+            key: gridKey,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: gridStateLength,
+              //childAspectRatio: 8.0 / 11.9
+            ),
+            itemBuilder: _buildGridItems,
+            itemCount: gridStateLength * gridStateLength,
           ),
-          itemBuilder: _buildGridItems,
-          itemCount: gridStateLength * gridStateLength,
         ),
-      ),)
+      )
     ]);
   }
 
@@ -51,10 +51,13 @@ class _PixelArtState extends State<PixelArt>{
 
     return GestureDetector(
       onTapDown: (details) {
-        RenderBox _box = gridItemKey.currentContext?.findRenderObject() as RenderBox;
-        RenderBox _boxGrid = gridKey.currentContext?.findRenderObject() as RenderBox;
+        RenderBox _box =
+            gridItemKey.currentContext?.findRenderObject() as RenderBox;
+        RenderBox _boxGrid =
+            gridKey.currentContext?.findRenderObject() as RenderBox;
 
-        Offset position = _boxGrid.localToGlobal(Offset.zero); //this is global position
+        Offset position =
+            _boxGrid.localToGlobal(Offset.zero); //this is global position
         double gridLeft = position.dx;
         double gridTop = position.dy;
 
@@ -62,7 +65,9 @@ class _PixelArtState extends State<PixelArt>{
 
         //Get item position
         int indexX = (gridPosition / _box.size.width).floor().toInt();
-        int indexY = ((details.globalPosition.dx - gridLeft) / _box.size.width).floor().toInt();
+        int indexY = ((details.globalPosition.dx - gridLeft) / _box.size.width)
+            .floor()
+            .toInt();
         if (gridState[indexX][indexY] == "Y") {
           gridState[indexX][indexY] = "";
         } else {
@@ -93,7 +98,8 @@ class _PixelArtState extends State<PixelArt>{
   void selectItem(GlobalKey<State<StatefulWidget>> gridItemKey, var details) {
     var _boxItem = gridItemKey.currentContext!.findRenderObject() as RenderBox;
     var _boxMainGrid = gridKey.currentContext!.findRenderObject() as RenderBox;
-    Offset position = _boxMainGrid.localToGlobal(Offset.zero); //this is global position
+    Offset position =
+        _boxMainGrid.localToGlobal(Offset.zero); //this is global position
     double gridLeft = position.dx;
     double gridTop = position.dy;
 
@@ -101,7 +107,10 @@ class _PixelArtState extends State<PixelArt>{
 
     //Get item position
     int rowIndex = (gridPosition / _boxItem.size.width).floor().toInt();
-    int colIndex = ((details.globalPosition.dx - gridLeft) / _boxItem.size.width).floor().toInt();
+    int colIndex =
+        ((details.globalPosition.dx - gridLeft) / _boxItem.size.width)
+            .floor()
+            .toInt();
     gridState[rowIndex][colIndex] = "Y";
 
     setState(() {});
@@ -124,7 +133,6 @@ class _PixelArtState extends State<PixelArt>{
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,5 +153,4 @@ class _PixelArtState extends State<PixelArt>{
   _gridItemTapped(int x, int y) {
     print("x is $x and Y is $y");
   }
-  
 }

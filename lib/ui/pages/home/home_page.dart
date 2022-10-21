@@ -30,12 +30,17 @@ class _HomePageState extends State<HomePage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('드로잉북',style: TextStyle(color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),),
+                  Text(
+                    '드로잉북',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
                   IconButton(
                       icon: Icon(
-                        Icons.settings,size: 24,
+                        Icons.settings,
+                        size: 24,
                         color: Colors.white,
                       ),
                       onPressed: () => Get.toNamed(Routes.setting))
