@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:drawcard/business_logic/controller/draw_page/draw_page_controller.dart';
+import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
 import 'package:drawcard/painter/sketcher.dart';
 import 'package:drawcard/ui/widget/expand_widget.dart';
 import 'package:get/get.dart';
@@ -25,21 +26,31 @@ class DrawingPage extends GetView<DrawPageController> {
               Column(
                 children: [
                   Container(
-                    height: 40,
+                    height: 56,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        IconButton(
-                            onPressed: controller.onTapExitPage,
-                            icon: Icon(
-                              Icons.arrow_back_ios_new,
-                              color: Colors.white,
-                            )),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.more_vert,
-                              color: Colors.white,
+                        InkWell(
+                            onTap: controller.onTapExitPage,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              child: Icon(
+                                Icons.arrow_back_ios_new,
+                                color: Colors.white,
+                                size: 24,
+                              ))),
+                        InkWell(
+                            onTap: controller.onTapSaveImage,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              child: Icon(
+                                Icons.save,
+                                color: Colors.white,
+                                size: 24,
+                              ),
                             )),
                       ],
                     ),
@@ -110,7 +121,7 @@ class DrawingPage extends GetView<DrawPageController> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: controller.onTapImportBg,
                     child: Container(
                       height: 50,
                       width: 50,
@@ -186,7 +197,7 @@ class DrawingPage extends GetView<DrawPageController> {
     return Container(
       height: 60,
       width: Get.width,
-      margin: EdgeInsets.symmetric(horizontal: 12).copyWith(bottom: 10),
+      margin: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(6.0),
@@ -249,7 +260,7 @@ class DrawingPage extends GetView<DrawPageController> {
       return Container(
           width: double.infinity,
           height: double.infinity,
-          margin: EdgeInsets.all(12.0).copyWith(bottom: 80),
+          margin: EdgeInsets.all(16).copyWith(bottom: 80),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(6.0)),
           child: GestureDetector(
