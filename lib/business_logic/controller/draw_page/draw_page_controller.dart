@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
 import 'package:drawcard/business_logic/enums/import_image_type.dart';
 import 'package:drawcard/business_logic/model/drawn_line.dart';
@@ -5,8 +8,12 @@ import 'package:drawcard/business_logic/enums/save_type.dart';
 import 'package:drawcard/consts/app_themes.dart';
 import 'package:drawcard/ui/widget/bottom_sheet/type_selector_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'dart:ui' as ui;
 
+import 'package:path_provider/path_provider.dart';
 class DrawPageController extends GetxController {
   RxList<DrawnLine> lines = RxList<DrawnLine>();
   Rx<Color> drawColor = Colors.red.obs;
@@ -15,7 +22,7 @@ class DrawPageController extends GetxController {
   RxDouble strokeWidth = 2.5.obs;
 
   Rx<DrawPadMenu> showMenu = DrawPadMenu.none.obs;
-
+  GlobalKey paletteKey = GlobalKey();
   static DrawPageController? get to {
     if (Get.isRegistered<DrawPageController>()) {
       return Get.find<DrawPageController>();
@@ -112,8 +119,7 @@ class DrawPageController extends GetxController {
     if(result == null) return;
 
     if(result == SaveType.gallery){
-      print('SaveType.gallery');
-      return;
+      await onTapSavePaletteImage();
     }
     if(result == SaveType.server){
       print('SaveType.server');
@@ -126,7 +132,7 @@ class DrawPageController extends GetxController {
       for (var v in ImportImageType.values) v.title: v
     };
     var result = await showTypeSelectorBottomSheet<ImportImageType>(
-        title: '이미지 저장하기',
+        title: '배경 이미지 첨부하기',
         typeList: values
     );
     if(result == null) return;
@@ -141,6 +147,24 @@ class DrawPageController extends GetxController {
     }
   }
 
+  Future<void> onTapSavePaletteImage() async{
+    try{
+      RenderRepaintBoundary? boundary = paletteKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage();
+      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      var pngBytes = byteData?.buffer.asUint8List();
+
+      final ts = DateTime.now().millisecondsSinceEpoch.toString();
+      final result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(pngBytes!),
+          quality: 90,
+          name: ts);
+      print(result);
+      print('capture is Done');
+    }catch(e){
+      print(e.toString());
+    }
+  }
   void onTapExitPage() {
     if (lines.isNotEmpty) {
       Get.back();

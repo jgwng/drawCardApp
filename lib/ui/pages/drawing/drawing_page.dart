@@ -39,7 +39,7 @@ class DrawingPage extends GetView<DrawPageController> {
                               child: Icon(
                                 Icons.arrow_back_ios_new,
                                 color: Colors.white,
-                                size: 24,
+                                size: 30,
                               ))),
                         InkWell(
                             onTap: controller.onTapSaveImage,
@@ -49,14 +49,17 @@ class DrawingPage extends GetView<DrawPageController> {
                               child: Icon(
                                 Icons.save,
                                 color: Colors.white,
-                                size: 24,
+                                size: 30,
                               ),
                             )),
                       ],
                     ),
                   ),
                   Expanded(
-                    child: drawPad(),
+                    child: RepaintBoundary(
+                      key: controller.paletteKey,
+                      child: drawPad(),
+                    ),
                   )
                 ],
               ),
