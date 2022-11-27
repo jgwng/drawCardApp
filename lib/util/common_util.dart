@@ -1,6 +1,8 @@
 import 'dart:io';
 
 
+import 'package:drawcard/business_logic/enums/import_image_type.dart';
+import 'package:drawcard/ui/widget/bottom_sheet/type_selector_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,10 +21,18 @@ class CommonUtil {
     Permission permission =
     (Platform.isAndroid) ? Permission.storage : Permission.photos;
 
-    // if (result == SelectorType.camera) {
-    //   source = ImageSource.camera;
-    //   permission = Permission.camera;
-    // }
+    Map<String, ImportImageType> values = {
+      for (var v in ImportImageType.values) v.title: v
+    };
+    var result = await showTypeSelectorBottomSheet<ImportImageType>(
+        title: title,
+        typeList: values
+    );
+
+    if (result == ImportImageType.camera) {
+      source = ImageSource.camera;
+      permission = Permission.camera;
+    }
 
     final status = await permission.request();
     if (status.isPermanentlyDenied) return null;

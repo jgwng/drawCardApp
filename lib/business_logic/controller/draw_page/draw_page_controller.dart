@@ -1,26 +1,24 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
-import 'package:drawcard/business_logic/enums/import_image_type.dart';
 import 'package:drawcard/business_logic/model/drawn_line.dart';
 import 'package:drawcard/business_logic/enums/save_type.dart';
 import 'package:drawcard/consts/app_themes.dart';
 import 'package:drawcard/ui/widget/bottom_sheet/type_selector_bottom_sheet.dart';
+import 'package:drawcard/util/common_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'dart:ui' as ui;
 
-import 'package:path_provider/path_provider.dart';
 class DrawPageController extends GetxController {
   RxList<DrawnLine> lines = RxList<DrawnLine>();
   Rx<Color> drawColor = Colors.red.obs;
   RxBool isEraseMode = false.obs;
   Paint paint = Paint();
   RxDouble strokeWidth = 2.5.obs;
-
+  RxString  bgImageUrl = ''.obs;
   Rx<DrawPadMenu> showMenu = DrawPadMenu.none.obs;
   GlobalKey paletteKey = GlobalKey();
   static DrawPageController? get to {
@@ -128,22 +126,11 @@ class DrawPageController extends GetxController {
   }
 
   void onTapImportBg() async{
-    Map<String, ImportImageType> values = {
-      for (var v in ImportImageType.values) v.title: v
-    };
-    var result = await showTypeSelectorBottomSheet<ImportImageType>(
-        title: '배경 이미지 첨부하기',
-        typeList: values
-    );
-    if(result == null) return;
 
-    if(result == ImportImageType.gallery){
-      print('ImportImageType.gallery');
-      return;
-    }
-    if(result == ImportImageType.camera){
-      print('ImportImageType.camera');
-      return;
+    String? path = await CommonUtil.getImageForApp(title: '배경 이미지 첨부하기', hasDefault: false);
+    if (path != null) {
+      bgImageUrl.value = path;
+      print(bgImageUrl.value);
     }
   }
 

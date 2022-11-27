@@ -34,13 +34,13 @@ class DrawingPage extends GetView<DrawPageController> {
                         InkWell(
                             onTap: controller.onTapExitPage,
                             child: Container(
-                              width: 40,
-                              height: 40,
-                              child: Icon(
-                                Icons.arrow_back_ios_new,
-                                color: Colors.white,
-                                size: 30,
-                              ))),
+                                width: 40,
+                                height: 40,
+                                child: Icon(
+                                  Icons.arrow_back_ios_new,
+                                  color: Colors.white,
+                                  size: 30,
+                                ))),
                         InkWell(
                             onTap: controller.onTapSaveImage,
                             child: Container(
@@ -147,13 +147,14 @@ class DrawingPage extends GetView<DrawPageController> {
                       width: 50,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
-                          color: Colors.white,
+                          color: controller.isEraseMode.isTrue ? Colors.purple : Colors.white,
                           shape: BoxShape.circle),
                       alignment: Alignment.center,
                       child: Image.asset(
                         'assets/images/eraser.png',
                         width: 25,
                         height: 25,
+                        color: controller.isEraseMode.isTrue ? Colors.white : null
                       ),
                     ),
                   ),
@@ -260,21 +261,52 @@ class DrawingPage extends GetView<DrawPageController> {
       if (controller.lines.isEmpty) {
         print(controller.lines);
       }
-      return Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: EdgeInsets.all(16).copyWith(bottom: 80),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(6.0)),
-          child: GestureDetector(
-              onPanStart: controller.onDrawStart,
-              onPanUpdate: controller.onDrawing,
-              child: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                return CustomPaint(
-                  painter: Sketcher(lines: controller.lines),
-                );
-              })));
+      return Stack(
+        children: [
+          Container(
+              width: double.infinity,
+              height: double.infinity,
+              margin: EdgeInsets.all(16).copyWith(bottom: 80),
+              decoration: BoxDecoration(
+                  color: controller.bgImageUrl.isEmpty ? Colors.white :  Colors.transparent,
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: FileImage(File(controller.bgImageUrl.value))),
+                  borderRadius: BorderRadius.circular(6.0)),
+              child: GestureDetector(
+                  onPanStart: controller.onDrawStart,
+                  onPanUpdate: controller.onDrawing,
+                  child: LayoutBuilder(builder:
+                      (BuildContext context, BoxConstraints constraints) {
+                    return CustomPaint(
+                      painter: Sketcher(lines: controller.lines),
+                    );
+                  }))),
+          if(controller.bgImageUrl.isNotEmpty)
+            Positioned(
+              right: 30,
+              top: 30,
+              child: InkWell(
+                onTap: (){
+                  controller.bgImageUrl.value = '';
+                },
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white
+                  ),
+                  child: const Icon(
+                    Icons.close,
+                    size: 20,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            )
+        ],
+      );
     });
   }
 
