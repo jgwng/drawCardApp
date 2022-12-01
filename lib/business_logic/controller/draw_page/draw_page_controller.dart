@@ -4,6 +4,7 @@ import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
 import 'package:drawcard/business_logic/model/drawn_line.dart';
 import 'package:drawcard/business_logic/enums/save_type.dart';
 import 'package:drawcard/consts/app_themes.dart';
+import 'package:drawcard/ui/widget/bottom_sheet/select_yn_bottom_sheet.dart';
 import 'package:drawcard/ui/widget/bottom_sheet/type_selector_bottom_sheet.dart';
 import 'package:drawcard/util/common_util.dart';
 import 'package:flutter/material.dart';
@@ -152,12 +153,16 @@ class DrawPageController extends GetxController {
       print(e.toString());
     }
   }
-  void onTapExitPage() {
-    if (lines.isNotEmpty) {
-      Get.back();
-    } else {
-      Get.back();
-    }
+  void onTapExitPage() async{
+    bool? result = await showYNSelectorBottomSheet(title: '임시 저장');
+    
+    // if (lines.isNotEmpty) {
+    //
+    //
+    //   Get.back();
+    // } else {
+    //   Get.back();
+    // }
   }
 }
 
