@@ -154,15 +154,17 @@ class DrawPageController extends GetxController {
     }
   }
   void onTapExitPage() async{
-    bool? result = await showYNSelectorBottomSheet(title: '임시 저장');
-    
-    // if (lines.isNotEmpty) {
-    //
-    //
-    //   Get.back();
-    // } else {
-    //   Get.back();
-    // }
+
+    if (lines.isNotEmpty) {
+      bool? result = await showYNSelectorBottomSheet(title: '임시 저장');
+      if(result == true){
+        Get.back();
+      }else{
+
+      }
+    } else {
+      Get.back();
+    }
   }
 }
 

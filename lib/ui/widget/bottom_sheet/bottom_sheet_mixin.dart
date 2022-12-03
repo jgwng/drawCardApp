@@ -1,3 +1,4 @@
+import 'package:drawcard/consts/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,7 @@ mixin BottomSheetMixin {
       height: 60,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: Colors.grey[800],
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
@@ -23,14 +24,15 @@ mixin BottomSheetMixin {
               child: Container(
                 height: 60,
                 alignment: Alignment.center,
-                child: Text(title, style: const TextStyle(fontSize: 20)),
+                child: Text(title, style: const TextStyle(fontSize: 20,color: Colors.white)),
               )),
           SizedBox(
             width: 60,
             height: 60,
             child: InkWell(
               onTap: onTapCloseSheet ?? Get.back,
-              child: const Icon(Icons.close, size: 24),
+              child: const Icon(Icons.close, size: 24,
+              color: Colors.white,),
             ),
           )
         ],
@@ -38,15 +40,26 @@ mixin BottomSheetMixin {
     );
   }
 
-  Widget bottomMenuButton<T>(T value, String text) {
+  Widget bottomMenuButton<T>(T value, String text,bool isLast) {
     return InkWell(
       onTap: () => Get.back(result: value),
       child: Container(
         height: 60,
         alignment: Alignment.center,
+        margin: EdgeInsets.symmetric(horizontal: 24),
+        decoration: BoxDecoration(
+          color: AppThemes.mainColor,
+          border: Border(
+            bottom: BorderSide(
+              color: (isLast) ? Colors.transparent : Colors.grey.withOpacity(0.5),
+
+            )
+          )
+        ),
         child: Text(
           text,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500,
+          color: Colors.white),
         ),
       ),
     );

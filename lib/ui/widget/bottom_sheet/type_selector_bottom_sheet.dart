@@ -1,3 +1,4 @@
+import 'package:drawcard/consts/app_themes.dart';
 import 'package:drawcard/ui/widget/bottom_sheet/bottom_sheet_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class TypeSelectorBottomSheet<T> extends StatelessWidget with BottomSheetMixin {
     return Container(
       height: 60 + typeList.length * 60 + Get.mediaQuery.padding.bottom,
       decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppThemes.mainColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
@@ -35,7 +36,9 @@ class TypeSelectorBottomSheet<T> extends StatelessWidget with BottomSheetMixin {
         children: <Widget>[
           header(title: title),
           ...typeList.keys
-              .map((e) => bottomMenuButton(typeList[e], e))
+              .map((e) => bottomMenuButton(typeList[e], e,
+            e == typeList.keys.last
+          ))
               .toList(),
           SizedBox(
             height: Get.mediaQuery.padding.bottom,

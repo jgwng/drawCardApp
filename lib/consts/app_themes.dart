@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class AppThemes {
   AppThemes._();
 
-  static const Color mainColor = Color(0xFF8D6E63);
-  static const Color pointColor = Color(0xFFF57C00);
+  static const Color mainColor = Color(0xFF000000);
+  static const Color pointColor = Color(0xFF88FC00);
   static const Color inActiveColor = Color.fromRGBO(174, 174, 174, 1.0);
   static const Color defaultTextColor = Color.fromRGBO(47, 46, 51, 1.0);
 
