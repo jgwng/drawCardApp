@@ -12,11 +12,8 @@ class DrawingPage extends GetView<DrawPageController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        if (Platform.isIOS) {
-          return Future.value(false);
-        } else {
-          return Future.value(false);
-        }
+        controller.onTapExitPage();
+        return Future.value(false);
       },
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -115,7 +112,8 @@ class DrawingPage extends GetView<DrawPageController> {
                       alignment: Alignment.center,
                       child: Obx(() {
                         return Text(
-                            '${controller.strokeWidth.value.toStringAsFixed(1)}',
+                            '${controller.strokeWidth.value.toStringAsFixed(
+                                1)}',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -147,14 +145,18 @@ class DrawingPage extends GetView<DrawPageController> {
                       width: 50,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
-                          color: controller.isEraseMode.isTrue ? Colors.purple : Colors.white,
+                          color: controller.isEraseMode.isTrue
+                              ? Colors.purple
+                              : Colors.white,
                           shape: BoxShape.circle),
                       alignment: Alignment.center,
                       child: Image.asset(
-                        'assets/images/eraser.png',
-                        width: 25,
-                        height: 25,
-                        color: controller.isEraseMode.isTrue ? Colors.white : null
+                          'assets/images/eraser.png',
+                          width: 25,
+                          height: 25,
+                          color: controller.isEraseMode.isTrue
+                              ? Colors.white
+                              : null
                       ),
                     ),
                   ),
@@ -268,10 +270,12 @@ class DrawingPage extends GetView<DrawPageController> {
               height: double.infinity,
               margin: EdgeInsets.all(16).copyWith(bottom: 80),
               decoration: BoxDecoration(
-                  color: controller.bgImageUrl.isEmpty ? Colors.white :  Colors.transparent,
-                  image: DecorationImage(
+                  color: controller.bgImageUrl.isEmpty ? Colors.white : Colors
+                      .transparent,
+                  image: (controller.bgImageUrl.value.isNotEmpty) ? DecorationImage(
                       fit: BoxFit.fill,
-                      image: FileImage(File(controller.bgImageUrl.value))),
+                      image: FileImage(
+                          File(controller.bgImageUrl.value))) : null,
                   borderRadius: BorderRadius.circular(6.0)),
               child: GestureDetector(
                   onPanStart: controller.onDrawStart,
@@ -287,15 +291,15 @@ class DrawingPage extends GetView<DrawPageController> {
               right: 30,
               top: 30,
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   controller.bgImageUrl.value = '';
                 },
                 child: Container(
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white
+                      shape: BoxShape.circle,
+                      color: Colors.white
                   ),
                   child: const Icon(
                     Icons.close,
