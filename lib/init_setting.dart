@@ -8,5 +8,5 @@ Future<void> initAppSetting() async {
   WidgetsFlutterBinding.ensureInitialized();
   GestureBinding.instance.resamplingEnabled = false;
 
-  await DBRepository.instance.database;
+  // await DBRepository.instance.database;
 }

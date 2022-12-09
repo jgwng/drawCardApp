@@ -20,61 +20,138 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppThemes.mainColor,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'MYDRAW',
-                    style: TextStyle(
-                        color: AppThemes.pointColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  // InkWell(
-                  //   onTap: () => Get.toNamed(Routes.setting),
-                  //   child: SizedBox(
-                  //     width: 40,
-                  //     height: 40,
-                  //     child: Icon(
-                  //       Icons.settings,
-                  //       size: 24,
-                  //       color: Colors.white,
-                  //     ),
-                  //   ),
-                  // )
-                ],
-              ),
+      body: CustomScrollView(
+        controller: controller.scrollController,
+        slivers: <Widget>[
+          //Sliver 1
+         Obx((){
+           print('controller.isTitleDisplay.isTrue : ${controller.isTitleDisplay.isTrue}');
+           return SliverAppBar(
+             pinned: true,
+             expandedHeight: 200,
+             elevation: 0,
+             backgroundColor: Colors.black,
+             title:  Visibility(
+               visible: controller.isTitleDisplay.isTrue,
+               child: Container(
+                   height: 45,
+                   child:Text('aaaa',style: TextStyle(color: Colors.white),)),
+             ),
+             flexibleSpace: FlexibleSpaceBar(
+
+               stretchModes: [
+                 StretchMode.blurBackground,
+                 StretchMode.zoomBackground,
+                 StretchMode.fadeTitle,
+               ],
+               collapseMode : CollapseMode.pin,
+               background: Container(
+                 color: Colors.black,
+                 padding: EdgeInsets.only(top: 130,left: 16),
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Text('나만의 그림을'
+                       ,style: TextStyle(color: Colors.white,
+                           fontSize: 20),),
+                     Text('재미있게 그려보아요!'
+                       ,style: TextStyle(color: Colors.white,
+                           fontSize: 20),)
+                   ],
+                 ),
+               ),
+             ),
+           );
+         }),
+          //Sliver 2
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200.0,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+              childAspectRatio: 1.0,
             ),
-            Expanded(
-              child: PreviewDrawCard(),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: Container(
-        width: fabSize,
-        height: fabSize,
-        child: FittedBox(
-          child: FloatingActionButton(
-            backgroundColor: Colors.white,
-            onPressed: () async{
-              await Get.toNamed(Routes.drawing);
-            },
-            child: Icon(
-              Icons.add_rounded,
-              size: 40,
-              color: Colors.black,
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return drawCardItem(index);
+              },
+              childCount: 20,
             ),
           ),
-        ),
+        ],
       ),
     );
   }
+
+  Widget appBar(){
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'MYDRAW',
+            style: TextStyle(
+                color: AppThemes.pointColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
+          // InkWell(
+          //   onTap: () => Get.toNamed(Routes.setting),
+          //   child: SizedBox(
+          //     width: 40,
+          //     height: 40,
+          //     child: Icon(
+          //       Icons.settings,
+          //       size: 24,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // )
+        ],
+      ),
+    );
+  }
+
+  Widget drawCardItem(int index){
+    if(index == 0){
+      return InkWell(
+        onTap: () async{
+          await Get.toNamed(Routes.drawing);
+        },
+        child: Container(
+          alignment: Alignment.center,
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0)
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add,size: 50,),
+              SizedBox(height: 10,),
+              Text('새 그림을\n그려볼까요?',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),)
+            ],
+          ),
+        ),
+      );
+    }
+    return Container(
+      alignment: Alignment.center,
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        color: Colors.teal[100 * (index % 9)],
+        borderRadius: BorderRadius.circular(12.0)
+      ),
+      child: Text('Grid Item $index', style: TextStyle(fontSize: 20),),
+    );
+  }
+
+
 }
