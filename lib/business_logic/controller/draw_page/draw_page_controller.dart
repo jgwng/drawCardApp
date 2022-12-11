@@ -1,5 +1,6 @@
+import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
 import 'package:drawcard/business_logic/model/drawn_line.dart';
 import 'package:drawcard/business_logic/enums/save_type.dart';
@@ -60,7 +61,7 @@ class DrawPageController extends GetxController {
 
     final startX = details.globalPosition.dx - 16;
     final startY =
-        details.globalPosition.dy - Get.mediaQuery.padding.top - 16 - 56;
+        details.globalPosition.dy - Get.mediaQuery.padding.top - 56;
 
     final stroke = DrawnLine(
         paint: drawColor.value,
@@ -73,7 +74,7 @@ class DrawPageController extends GetxController {
   void onDrawing(DragUpdateDetails details) {
     final endX = details.globalPosition.dx - 16;
     final endY =
-        details.globalPosition.dy - Get.mediaQuery.padding.top - 16 - 56;
+        details.globalPosition.dy - Get.mediaQuery.padding.top - 56;
     lines.last.path.lineTo(endX, endY);
     lines.refresh();
   }
@@ -154,13 +155,26 @@ class DrawPageController extends GetxController {
     }
   }
   void onTapExitPage() async{
-
     if (lines.isNotEmpty) {
       bool? result = await showYNSelectorBottomSheet(title: '임시 저장');
       if(result == true){
-        Get.back();
+        // using your method of getting an image
+        RenderRepaintBoundary? boundary = paletteKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+        ui.Image image = await boundary.toImage();
+        final Directory directory = await getApplicationDocumentsDirectory();
+        final ByteData? newImage = await image.toByteData(format: ui.ImageByteFormat.png);
+        final imageFile = File('${directory.path}/filename.png');
+        if(newImage != null){
+          await imageFile.writeAsBytes(newImage.buffer.asInt8List());
+        }
+        var b = newImage!.buffer.asUint8List();
+        bool a = await File('${directory.path}/filename.png').exists();
+        print('directory.path : ${directory.path}');
+        print('file is Saved : $a');
+        Get.back(result: {'lines': lines,
+        'uintList' : b});
       }else{
-
+        Get.back();
       }
     } else {
       Get.back();

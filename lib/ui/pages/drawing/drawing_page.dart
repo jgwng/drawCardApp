@@ -268,7 +268,7 @@ class DrawingPage extends GetView<DrawPageController> {
           Container(
               width: double.infinity,
               height: double.infinity,
-              margin: EdgeInsets.all(16).copyWith(bottom: 80),
+              margin: EdgeInsets.only(left: 16,right: 16,bottom: 16).copyWith(bottom: 80),
               decoration: BoxDecoration(
                   color: controller.bgImageUrl.isEmpty ? Colors.white : Colors
                       .transparent,

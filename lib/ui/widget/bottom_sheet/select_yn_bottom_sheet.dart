@@ -70,7 +70,7 @@ class YNSelectorBottomSheet extends StatelessWidget with BottomSheetMixin {
                   )),
               Expanded(
                 child: InkWell(
-                  onTap: () => Get.back(result: false),
+                  onTap: () => Get.back(result: true),
                   child:  Container(
                     color: AppThemes.pointColor,
                     height: 56,

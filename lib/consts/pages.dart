@@ -4,6 +4,7 @@ import 'package:drawcard/business_logic/binding/login_binding.dart';
 import 'package:drawcard/business_logic/binding/sign_up_binding.dart';
 import 'package:drawcard/consts/routes.dart';
 import 'package:drawcard/ui/pages/auth/sign_up_page.dart';
+import 'package:drawcard/ui/pages/detail/draw_detail_page.dart';
 import 'package:drawcard/ui/pages/drawing/drawing_page.dart';
 import 'package:drawcard/ui/pages/home/home_page.dart';
 import 'package:drawcard/ui/pages/pixel/pixel_art.dart';
@@ -24,6 +25,9 @@ class AppPages {
         name: Routes.signUp,
         page: () => SignUpPage(),
         binding: SignUpBinding()),
+    GetPage(
+        name: Routes.detail,
+        page: () => DrawDetailPage()),
     GetPage(
         name: Routes.login, binding: LoginBindings(), page: () => LoginPage()),
     GetPage(
