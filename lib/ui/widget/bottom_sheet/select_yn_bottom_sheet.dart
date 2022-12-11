@@ -52,14 +52,16 @@ class YNSelectorBottomSheet extends StatelessWidget with BottomSheetMixin {
             title,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 30,
           ),
           Text(
             content,
+            textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
           Spacer(),

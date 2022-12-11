@@ -1,3 +1,4 @@
+import 'package:drawcard/business_logic/binding/draw_detail_binding.dart';
 import 'package:drawcard/business_logic/binding/draw_page_binding.dart';
 import 'package:drawcard/business_logic/binding/home_page_binding.dart';
 import 'package:drawcard/business_logic/binding/login_binding.dart';
@@ -25,7 +26,10 @@ class AppPages {
         name: Routes.signUp,
         page: () => SignUpPage(),
         binding: SignUpBinding()),
-    GetPage(name: Routes.detail, page: () => DrawDetailPage()),
+    GetPage(
+        name: Routes.detail,
+        binding: DrawDetailBinding(),
+        page: () => DrawDetailPage()),
     GetPage(
         name: Routes.login, binding: LoginBindings(), page: () => LoginPage()),
     GetPage(
