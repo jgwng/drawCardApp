@@ -23,6 +23,7 @@ class DrawPageController extends GetxController {
   RxString bgImageUrl = ''.obs;
   Rx<DrawPadMenu> showMenu = DrawPadMenu.none.obs;
   GlobalKey paletteKey = GlobalKey();
+
   static DrawPageController? get to {
     if (Get.isRegistered<DrawPageController>()) {
       return Get.find<DrawPageController>();
@@ -136,10 +137,13 @@ class DrawPageController extends GetxController {
           ?.findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage();
       ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
+      await image.toByteData(format: ui.ImageByteFormat.png);
       var pngBytes = byteData?.buffer.asUint8List();
 
-      final ts = DateTime.now().millisecondsSinceEpoch.toString();
+      final ts = DateTime
+          .now()
+          .millisecondsSinceEpoch
+          .toString();
       final result = await ImageGallerySaver.saveImage(
           Uint8List.fromList(pngBytes!),
           quality: 90,
@@ -153,7 +157,12 @@ class DrawPageController extends GetxController {
 
   void onTapExitPage() async {
     if (lines.isNotEmpty) {
-      bool? result = await showYNSelectorBottomSheet(title: '임시 저장');
+      bool? result = await showYNSelectorBottomSheet(
+          title: '그림 그리기를 종료할까요?',
+          content: '임시 저장하지 않으시면,\n지금까지 그린 그림은 저장되지 않아요.',
+          leftBtnText: '종료',
+          rightBtnText: '임시 저장'
+      );
       if (result == true) {
         // using your method of getting an image
         RenderRepaintBoundary? boundary = paletteKey.currentContext
@@ -161,15 +170,12 @@ class DrawPageController extends GetxController {
         ui.Image image = await boundary.toImage();
         final Directory directory = await getApplicationDocumentsDirectory();
         final ByteData? newImage =
-            await image.toByteData(format: ui.ImageByteFormat.png);
+        await image.toByteData(format: ui.ImageByteFormat.png);
         final imageFile = File('${directory.path}/filename.png');
         if (newImage != null) {
           await imageFile.writeAsBytes(newImage.buffer.asInt8List());
         }
         var b = newImage!.buffer.asUint8List();
-        bool a = await File('${directory.path}/filename.png').exists();
-        print('directory.path : ${directory.path}');
-        print('file is Saved : $a');
         Get.back(result: {'lines': lines, 'uintList': b});
       } else {
         Get.back();
