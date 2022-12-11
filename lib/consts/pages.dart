@@ -25,9 +25,7 @@ class AppPages {
         name: Routes.signUp,
         page: () => SignUpPage(),
         binding: SignUpBinding()),
-    GetPage(
-        name: Routes.detail,
-        page: () => DrawDetailPage()),
+    GetPage(name: Routes.detail, page: () => DrawDetailPage()),
     GetPage(
         name: Routes.login, binding: LoginBindings(), page: () => LoginPage()),
     GetPage(

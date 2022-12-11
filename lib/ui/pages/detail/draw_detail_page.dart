@@ -14,10 +14,9 @@ class DrawDetailPage extends StatefulWidget {
 }
 
 class _DrawDetailPageState extends State<DrawDetailPage> {
-
   List<DrawnLine> drawLines = [];
   @override
-  void initState(){
+  void initState() {
     super.initState();
     drawLines = Get.arguments['drawLines'] ?? [];
   }
@@ -27,7 +26,7 @@ class _DrawDetailPageState extends State<DrawDetailPage> {
     return Scaffold(
       backgroundColor: AppThemes.mainColor,
       body: SafeArea(
-        child:  Column(
+        child: Column(
           children: [
             Container(
               height: 56,
@@ -45,12 +44,12 @@ class _DrawDetailPageState extends State<DrawDetailPage> {
                       ))),
             ),
             Expanded(
-                child:  Container(
+                child: Container(
                     width: double.infinity,
                     height: double.infinity,
-                    margin: EdgeInsets.only(left: 16,right: 16,bottom: 16),
+                    margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     decoration: BoxDecoration(
-                        color:  Colors.white,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(6.0)),
                     child: LayoutBuilder(builder:
                         (BuildContext context, BoxConstraints constraints) {
@@ -66,7 +65,6 @@ class _DrawDetailPageState extends State<DrawDetailPage> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(6.0)),
-
             )
           ],
         ),
@@ -74,32 +72,33 @@ class _DrawDetailPageState extends State<DrawDetailPage> {
     );
   }
 }
+
 class SOP extends CustomPainter {
   final List<DrawnLine> lines;
   SOP({required this.lines});
 
   @override
   void paint(Canvas canvas, Size size) {
-
-    var path_width = Get.width -16;
-    var path_height = Get.height-200-Get.mediaQuery.padding.top+16;
+    var path_width = Get.width - 16;
+    var path_height = Get.height - 200 - Get.mediaQuery.padding.top + 16;
     var screen_width = size.width;
     var screen_height = size.height;
     var x_scale = screen_width / path_width;
     var y_scale = screen_height / path_height;
     //UNCOMMENT the following line to see the scaling effect
-    canvas.scale(x_scale,y_scale);
+    canvas.scale(x_scale, y_scale);
     for (final stroke in lines) {
       final paint = Paint()
         ..strokeWidth = stroke.width
         ..color =
-        (stroke.isErase) ? Colors.transparent : stroke.paint ?? Colors.red
+            (stroke.isErase) ? Colors.transparent : stroke.paint ?? Colors.red
         ..strokeCap = StrokeCap.round
         ..style = PaintingStyle.stroke
         ..blendMode = (stroke.isErase) ? BlendMode.clear : BlendMode.srcOver;
       canvas.drawPath(stroke.path, paint);
     }
   }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;

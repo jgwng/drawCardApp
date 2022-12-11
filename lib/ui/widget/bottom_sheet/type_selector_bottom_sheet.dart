@@ -36,9 +36,8 @@ class TypeSelectorBottomSheet<T> extends StatelessWidget with BottomSheetMixin {
         children: <Widget>[
           header(title: title),
           ...typeList.keys
-              .map((e) => bottomMenuButton(typeList[e], e,
-            e == typeList.keys.last
-          ))
+              .map((e) =>
+                  bottomMenuButton(typeList[e], e, e == typeList.keys.last))
               .toList(),
           SizedBox(
             height: Get.mediaQuery.padding.bottom,

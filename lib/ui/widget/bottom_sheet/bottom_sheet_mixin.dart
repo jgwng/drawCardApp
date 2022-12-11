@@ -22,17 +22,21 @@ mixin BottomSheetMixin {
           ),
           Expanded(
               child: Container(
-                height: 60,
-                alignment: Alignment.center,
-                child: Text(title, style: const TextStyle(fontSize: 20,color: Colors.white)),
-              )),
+            height: 60,
+            alignment: Alignment.center,
+            child: Text(title,
+                style: const TextStyle(fontSize: 20, color: Colors.white)),
+          )),
           SizedBox(
             width: 60,
             height: 60,
             child: InkWell(
               onTap: onTapCloseSheet ?? Get.back,
-              child: const Icon(Icons.close, size: 24,
-              color: Colors.white,),
+              child: const Icon(
+                Icons.close,
+                size: 24,
+                color: Colors.white,
+              ),
             ),
           )
         ],
@@ -40,7 +44,7 @@ mixin BottomSheetMixin {
     );
   }
 
-  Widget bottomMenuButton<T>(T value, String text,bool isLast) {
+  Widget bottomMenuButton<T>(T value, String text, bool isLast) {
     return InkWell(
       onTap: () => Get.back(result: value),
       child: Container(
@@ -48,18 +52,16 @@ mixin BottomSheetMixin {
         alignment: Alignment.center,
         margin: EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
-          color: AppThemes.mainColor,
-          border: Border(
-            bottom: BorderSide(
-              color: (isLast) ? Colors.transparent : Colors.grey.withOpacity(0.5),
-
-            )
-          )
-        ),
+            color: AppThemes.mainColor,
+            border: Border(
+                bottom: BorderSide(
+              color:
+                  (isLast) ? Colors.transparent : Colors.grey.withOpacity(0.5),
+            ))),
         child: Text(
           text,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500,
-          color: Colors.white),
+          style: const TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
         ),
       ),
     );

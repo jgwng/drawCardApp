@@ -112,8 +112,7 @@ class DrawingPage extends GetView<DrawPageController> {
                       alignment: Alignment.center,
                       child: Obx(() {
                         return Text(
-                            '${controller.strokeWidth.value.toStringAsFixed(
-                                1)}',
+                            '${controller.strokeWidth.value.toStringAsFixed(1)}',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -150,14 +149,12 @@ class DrawingPage extends GetView<DrawPageController> {
                               : Colors.white,
                           shape: BoxShape.circle),
                       alignment: Alignment.center,
-                      child: Image.asset(
-                          'assets/images/eraser.png',
+                      child: Image.asset('assets/images/eraser.png',
                           width: 25,
                           height: 25,
                           color: controller.isEraseMode.isTrue
                               ? Colors.white
-                              : null
-                      ),
+                              : null),
                     ),
                   ),
                   InkWell(
@@ -268,14 +265,17 @@ class DrawingPage extends GetView<DrawPageController> {
           Container(
               width: double.infinity,
               height: double.infinity,
-              margin: EdgeInsets.only(left: 16,right: 16,bottom: 16).copyWith(bottom: 80),
+              margin: EdgeInsets.only(left: 16, right: 16, bottom: 16)
+                  .copyWith(bottom: 80),
               decoration: BoxDecoration(
-                  color: controller.bgImageUrl.isEmpty ? Colors.white : Colors
-                      .transparent,
-                  image: (controller.bgImageUrl.value.isNotEmpty) ? DecorationImage(
-                      fit: BoxFit.fill,
-                      image: FileImage(
-                          File(controller.bgImageUrl.value))) : null,
+                  color: controller.bgImageUrl.isEmpty
+                      ? Colors.white
+                      : Colors.transparent,
+                  image: (controller.bgImageUrl.value.isNotEmpty)
+                      ? DecorationImage(
+                          fit: BoxFit.fill,
+                          image: FileImage(File(controller.bgImageUrl.value)))
+                      : null,
                   borderRadius: BorderRadius.circular(6.0)),
               child: GestureDetector(
                   onPanStart: controller.onDrawStart,
@@ -286,7 +286,7 @@ class DrawingPage extends GetView<DrawPageController> {
                       painter: Sketcher(lines: controller.lines),
                     );
                   }))),
-          if(controller.bgImageUrl.isNotEmpty)
+          if (controller.bgImageUrl.isNotEmpty)
             Positioned(
               right: 30,
               top: 30,
@@ -298,9 +298,7 @@ class DrawingPage extends GetView<DrawPageController> {
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white
-                  ),
+                      shape: BoxShape.circle, color: Colors.white),
                   child: const Icon(
                     Icons.close,
                     size: 20,

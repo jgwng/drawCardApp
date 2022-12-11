@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:drawcard/business_logic/enums/import_image_type.dart';
 import 'package:drawcard/ui/widget/bottom_sheet/type_selector_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,18 +15,15 @@ class CommonUtil {
 
   static Future<String?> getImageForApp(
       {required String title, bool hasDefault = false}) async {
-
     ImageSource source = ImageSource.gallery;
     Permission permission =
-    (Platform.isAndroid) ? Permission.storage : Permission.photos;
+        (Platform.isAndroid) ? Permission.storage : Permission.photos;
 
     Map<String, ImportImageType> values = {
       for (var v in ImportImageType.values) v.title: v
     };
     var result = await showTypeSelectorBottomSheet<ImportImageType>(
-        title: title,
-        typeList: values
-    );
+        title: title, typeList: values);
 
     if (result == ImportImageType.camera) {
       source = ImageSource.camera;
@@ -41,6 +37,4 @@ class CommonUtil {
     if (image == null) return null;
     return image.path;
   }
-
-
 }

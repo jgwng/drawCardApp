@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Future<bool?> showYNSelectorBottomSheet(
-    {required String title, String? content, String? leftBtnText,String? rightBtnText}) async {
+    {required String title,
+    String? content,
+    String? leftBtnText,
+    String? rightBtnText}) async {
   final result = await Get.bottomSheet(YNSelectorBottomSheet(
     title: title,
     content: content ?? '',
@@ -18,9 +21,10 @@ Future<bool?> showYNSelectorBottomSheet(
 class YNSelectorBottomSheet extends StatelessWidget with BottomSheetMixin {
   const YNSelectorBottomSheet(
       {Key? key,
-        required this.title,
-        required this.content,
-        required this.leftBtnText,required this.rightBtnText})
+      required this.title,
+      required this.content,
+      required this.leftBtnText,
+      required this.rightBtnText})
       : super(key: key);
   final String title;
   final String content;
@@ -41,45 +45,49 @@ class YNSelectorBottomSheet extends StatelessWidget with BottomSheetMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SizedBox(height: 40,),
-          Text(title,style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),),
-          SizedBox(height: 20,),
-          Text(content,style: TextStyle(
-            color: Colors.white,
-            fontSize: 15
-          ),),
+          SizedBox(
+            height: 40,
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            content,
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
           Spacer(),
           Row(
             children: [
               Expanded(
                   child: InkWell(
-                    onTap: () => Get.back(result: false),
-                    child: Container(
-                        height: 56,
-                        color: Colors.black,
-                        alignment: Alignment.center,
-                        child: Text(leftBtnText,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white
-                            ))
-                    ),
-                  )),
+                onTap: () => Get.back(result: false),
+                child: Container(
+                    height: 56,
+                    color: Colors.black,
+                    alignment: Alignment.center,
+                    child: Text(leftBtnText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white))),
+              )),
               Expanded(
                 child: InkWell(
                   onTap: () => Get.back(result: true),
-                  child:  Container(
+                  child: Container(
                     color: AppThemes.pointColor,
                     height: 56,
                     alignment: Alignment.center,
-                    child: Text(rightBtnText,
+                    child: Text(
+                      rightBtnText,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black
-                      ),),
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
               )

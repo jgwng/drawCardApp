@@ -134,9 +134,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
     return InkWell(
       onTap: () {
-        Get.toNamed(Routes.detail,
-            arguments: {'drawLines': controller.drawCards[index - 1],
-            'imagePath': '${controller.path}/filename.png'});
+        Get.toNamed(Routes.detail, arguments: {
+          'drawLines': controller.drawCards[index - 1],
+          'imagePath': '${controller.path}/filename.png'
+        });
       },
       child: Container(
         alignment: Alignment.center,

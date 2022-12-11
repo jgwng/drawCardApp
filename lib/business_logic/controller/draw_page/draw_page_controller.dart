@@ -20,7 +20,7 @@ class DrawPageController extends GetxController {
   RxBool isEraseMode = false.obs;
   Paint paint = Paint();
   RxDouble strokeWidth = 2.5.obs;
-  RxString  bgImageUrl = ''.obs;
+  RxString bgImageUrl = ''.obs;
   Rx<DrawPadMenu> showMenu = DrawPadMenu.none.obs;
   GlobalKey paletteKey = GlobalKey();
   static DrawPageController? get to {
@@ -60,8 +60,7 @@ class DrawPageController extends GetxController {
     }
 
     final startX = details.globalPosition.dx - 16;
-    final startY =
-        details.globalPosition.dy - Get.mediaQuery.padding.top - 56;
+    final startY = details.globalPosition.dy - Get.mediaQuery.padding.top - 56;
 
     final stroke = DrawnLine(
         paint: drawColor.value,
@@ -73,8 +72,7 @@ class DrawPageController extends GetxController {
 
   void onDrawing(DragUpdateDetails details) {
     final endX = details.globalPosition.dx - 16;
-    final endY =
-        details.globalPosition.dy - Get.mediaQuery.padding.top - 56;
+    final endY = details.globalPosition.dy - Get.mediaQuery.padding.top - 56;
     lines.last.path.lineTo(endX, endY);
     lines.refresh();
   }
@@ -108,39 +106,37 @@ class DrawPageController extends GetxController {
     }
   }
 
-  void onTapSaveImage() async{
-    Map<String, SaveType> values = {
-      for (var v in SaveType.values) v.title: v
-    };
+  void onTapSaveImage() async {
+    Map<String, SaveType> values = {for (var v in SaveType.values) v.title: v};
     var result = await showTypeSelectorBottomSheet<SaveType>(
-      title: '이미지 저장하기',
-      typeList: values
-    );
-    if(result == null) return;
+        title: '이미지 저장하기', typeList: values);
+    if (result == null) return;
 
-    if(result == SaveType.gallery){
+    if (result == SaveType.gallery) {
       await onTapSavePaletteImage();
     }
-    if(result == SaveType.server){
+    if (result == SaveType.server) {
       print('SaveType.server');
       return;
     }
   }
 
-  void onTapImportBg() async{
-
-    String? path = await CommonUtil.getImageForApp(title: '배경 이미지 첨부하기', hasDefault: false);
+  void onTapImportBg() async {
+    String? path = await CommonUtil.getImageForApp(
+        title: '배경 이미지 첨부하기', hasDefault: false);
     if (path != null) {
       bgImageUrl.value = path;
       print(bgImageUrl.value);
     }
   }
 
-  Future<void> onTapSavePaletteImage() async{
-    try{
-      RenderRepaintBoundary? boundary = paletteKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+  Future<void> onTapSavePaletteImage() async {
+    try {
+      RenderRepaintBoundary? boundary = paletteKey.currentContext
+          ?.findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage();
-      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
       var pngBytes = byteData?.buffer.asUint8List();
 
       final ts = DateTime.now().millisecondsSinceEpoch.toString();
@@ -150,30 +146,32 @@ class DrawPageController extends GetxController {
           name: ts);
       print(result);
       print('capture is Done');
-    }catch(e){
+    } catch (e) {
       print(e.toString());
     }
   }
-  void onTapExitPage() async{
+
+  void onTapExitPage() async {
     if (lines.isNotEmpty) {
       bool? result = await showYNSelectorBottomSheet(title: '임시 저장');
-      if(result == true){
+      if (result == true) {
         // using your method of getting an image
-        RenderRepaintBoundary? boundary = paletteKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+        RenderRepaintBoundary? boundary = paletteKey.currentContext
+            ?.findRenderObject() as RenderRepaintBoundary;
         ui.Image image = await boundary.toImage();
         final Directory directory = await getApplicationDocumentsDirectory();
-        final ByteData? newImage = await image.toByteData(format: ui.ImageByteFormat.png);
+        final ByteData? newImage =
+            await image.toByteData(format: ui.ImageByteFormat.png);
         final imageFile = File('${directory.path}/filename.png');
-        if(newImage != null){
+        if (newImage != null) {
           await imageFile.writeAsBytes(newImage.buffer.asInt8List());
         }
         var b = newImage!.buffer.asUint8List();
         bool a = await File('${directory.path}/filename.png').exists();
         print('directory.path : ${directory.path}');
         print('file is Saved : $a');
-        Get.back(result: {'lines': lines,
-        'uintList' : b});
-      }else{
+        Get.back(result: {'lines': lines, 'uintList': b});
+      } else {
         Get.back();
       }
     } else {
@@ -181,4 +179,3 @@ class DrawPageController extends GetxController {
     }
   }
 }
-
