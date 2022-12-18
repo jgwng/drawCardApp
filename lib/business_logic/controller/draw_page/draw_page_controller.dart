@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:drawcard/business_logic/model/user_picture.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
 import 'package:drawcard/business_logic/model/drawn_line.dart';
@@ -182,7 +183,15 @@ class DrawPageController extends GetxController {
           await imageFile.writeAsBytes(newImage.buffer.asInt8List());
         }
         var b = newImage!.buffer.asUint8List();
-        Get.back(result: {'lines': lines, 'uintList': b});
+        final pictureInfo = UserPicture(
+          drawnLines: lines,
+          isLock: false,
+          createDateTime: DateTime.now().toIso8601String(),
+          thumbnailName: 'fileName',
+          bgImageUrl: bgImageUrl.value
+        );
+
+        Get.back(result: pictureInfo);
       } else {
         Get.back();
       }

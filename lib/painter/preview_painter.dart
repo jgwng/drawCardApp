@@ -1,6 +1,5 @@
 import 'package:drawcard/business_logic/model/drawn_line.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class PreviewPainter extends CustomPainter {
   final List<DrawnLine> lines;

@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/business_logic/controller/home_page/home_page_controller.dart';
 import 'package:drawcard/consts/app_themes.dart';
 import 'package:drawcard/consts/routes.dart';
-import 'package:drawcard/painter/preview_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -100,12 +100,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget drawCardItem(int index) {
     if (index == 0) {
       return InkWell(
-        onTap: () async {
-          var newCard = await Get.toNamed(Routes.drawing);
-          if (newCard != null) {
-            controller.drawCards.add(newCard['lines']);
-          }
-        },
+        onTap: controller.onTapDrawNewCard,
         child: Container(
           alignment: Alignment.center,
           width: 100,
@@ -133,18 +128,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       );
     }
     return InkWell(
-      onTap: () {
-        Get.toNamed(Routes.detail, arguments: {
-          'drawLines': controller.drawCards[index - 1],
-          'imagePath': '${controller.path}/filename.png'
-        });
-      },
+      onTap: () => controller.onTapDetailDrawCard(index),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
         child: Image.file(
-          File('${controller.path}/filename.png'),
+          File('${GlobalController.to.filePath}/filename.png'),
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,

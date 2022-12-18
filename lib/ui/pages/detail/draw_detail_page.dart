@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:drawcard/business_logic/controller/detail_page/draw_detail_controller.dart';
 import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/consts/app_themes.dart';
-import 'package:drawcard/painter/preview_painter.dart';
-import 'package:drawcard/painter/sketcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

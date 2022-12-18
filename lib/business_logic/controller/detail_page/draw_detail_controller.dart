@@ -1,27 +1,19 @@
-import 'dart:io';
-
-import 'package:drawcard/business_logic/controller/global_controller.dart';
-import 'package:drawcard/business_logic/model/drawn_line.dart';
+import 'package:drawcard/business_logic/model/user_picture.dart';
 import 'package:drawcard/ui/widget/bottom_sheet/select_yn_bottom_sheet.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 
 class DrawDetailController extends GetxController{
 
-  List<DrawnLine> drawnLines = [];
+  UserPicture drawnLines = UserPicture();
   RxBool isLock = false.obs;
   String? filePath;
   @override
   void onInit(){
     super.onInit();
-    drawnLines = Get.arguments['drawLines'] ?? [];
+    drawnLines = Get.arguments?['userCard'] ?? UserPicture();
   }
 
-  @override
-  void onReady() async {
-    filePath = GlobalController.to.filePath;
-    print(filePath);
-  }
+
 
   void onTapEditCard(){
 

@@ -1,28 +1,17 @@
-import 'dart:io';
-
-import 'package:drawcard/business_logic/controller/global_controller.dart';
-import 'package:drawcard/business_logic/model/drawn_line.dart';
+import 'package:drawcard/business_logic/model/user_picture.dart';
+import 'package:drawcard/consts/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 
 class HomePageController extends GetxController {
   RxBool isTitleDisplay = false.obs;
   ScrollController scrollController = ScrollController();
-  RxList<List<DrawnLine>> drawCards = <List<DrawnLine>>[].obs;
-  String? path;
+  RxList<UserPicture> drawCards = <UserPicture>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     scrollController.addListener(scrollListener);
-  }
-
-  @override
-  void onReady() async {
-    print(GlobalController.to.filePath);
-    Directory directory = await getApplicationDocumentsDirectory();
-    path = directory.path;
   }
 
   void scrollListener() {
@@ -31,5 +20,16 @@ class HomePageController extends GetxController {
     } else {
       isTitleDisplay.value = true;
     }
+  }
+
+  void onTapDrawNewCard() async{
+    var newCard = await Get.toNamed(Routes.drawing);
+    if (newCard != null) {
+      drawCards.add(newCard);
+    }
+  }
+
+  void onTapDetailDrawCard(int index) async{
+    var userCard = await Get.toNamed(Routes.detail,arguments: {'userCard' : drawCards[index-1]});
   }
 }
