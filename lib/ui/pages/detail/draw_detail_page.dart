@@ -73,7 +73,7 @@ class DrawDetailPage extends GetView<DrawDetailController> {
           bottomMenuIcon(Icons.edit,controller.onTapEditCard),
           Obx((){
             return bottomMenuIcon(
-                controller.isLock.isTrue ?
+                (controller.drawnLines.value.isLock ?? false) == true ?
                 Icons.lock_rounded : Icons.lock_open_rounded,controller.onTapLockCard);
           }),
           bottomMenuIcon(Icons.save,controller.onTapSaveCard),

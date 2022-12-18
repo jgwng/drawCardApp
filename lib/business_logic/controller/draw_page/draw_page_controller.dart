@@ -16,7 +16,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'dart:ui' as ui;
 
 class DrawPageController extends GetxController {
-  RxList<DrawnLine> lines = RxList<DrawnLine>();
+  RxList<DrawnLine> lines = <DrawnLine>[].obs;
   Rx<Color> drawColor = Colors.red.obs;
   RxBool isEraseMode = false.obs;
   Paint paint = Paint();
@@ -25,6 +25,10 @@ class DrawPageController extends GetxController {
   Rx<DrawPadMenu> showMenu = DrawPadMenu.none.obs;
   GlobalKey paletteKey = GlobalKey();
   List<double> offsetList = [];
+
+  UserPicture userPictureInfo = UserPicture();
+  bool isModify = false;
+
   static DrawPageController? get to {
     if (Get.isRegistered<DrawPageController>()) {
       return Get.find<DrawPageController>();
@@ -47,8 +51,12 @@ class DrawPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    lines.add(DrawnLine());
-    lines.removeLast();
+    Map? args = Get.arguments;
+    if(args != null){
+      userPictureInfo = args['userCard'] ?? UserPicture();
+      lines.value = userPictureInfo.drawnLines ?? <DrawnLine>[];
+      isModify = true;
+    }
   }
 
   void clearScreen() {
