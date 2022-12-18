@@ -1,6 +1,10 @@
 
+import 'dart:io';
+
 import 'package:drawcard/business_logic/controller/detail_page/draw_detail_controller.dart';
+import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/consts/app_themes.dart';
+import 'package:drawcard/painter/preview_painter.dart';
 import 'package:drawcard/painter/sketcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,12 +52,12 @@ class DrawDetailPage extends GetView<DrawDetailController> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(6.0)),
-            child: LayoutBuilder(builder:
-                (BuildContext context, BoxConstraints constraints) {
-              return CustomPaint(
-                painter: Sketcher(lines: controller.drawnLines),
-              );
-            })));
+            child:  Image.file(
+              File('${GlobalController.to.filePath}/filename.png'),
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            )));
   }
 
   Widget bottomMenu(){

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/business_logic/model/drawn_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,7 @@ class HomePageController extends GetxController {
 
   @override
   void onReady() async {
+    print(GlobalController.to.filePath);
     Directory directory = await getApplicationDocumentsDirectory();
     path = directory.path;
   }

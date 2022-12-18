@@ -1,3 +1,4 @@
+import 'package:drawcard/business_logic/binding/global_binding.dart';
 import 'package:drawcard/consts/pages.dart';
 import 'package:drawcard/consts/routes.dart';
 import 'package:drawcard/init_setting.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: AppPages.pages,
       initialRoute: Routes.login,
+      initialBinding: GlobalBinding(),
     );
   }
 }

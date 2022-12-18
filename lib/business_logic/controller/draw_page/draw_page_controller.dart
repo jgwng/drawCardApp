@@ -23,7 +23,7 @@ class DrawPageController extends GetxController {
   RxString bgImageUrl = ''.obs;
   Rx<DrawPadMenu> showMenu = DrawPadMenu.none.obs;
   GlobalKey paletteKey = GlobalKey();
-
+  List<double> offsetList = [];
   static DrawPageController? get to {
     if (Get.isRegistered<DrawPageController>()) {
       return Get.find<DrawPageController>();
@@ -66,16 +66,22 @@ class DrawPageController extends GetxController {
     final stroke = DrawnLine(
         paint: drawColor.value,
         width: strokeWidth.value,
-        isErase: isEraseMode.value);
-    stroke.path.moveTo(startX, startY);
-    lines.add(stroke);
+        isErase: isEraseMode.value,
+        startX: startX,
+        startY: startY,
+        endXList: [],
+        endYList: []
+    );
+     lines.add(stroke);
   }
 
   void onDrawing(DragUpdateDetails details) {
     final endX = details.globalPosition.dx - 16;
     final endY = details.globalPosition.dy - Get.mediaQuery.padding.top - 56;
-    lines.last.path.lineTo(endX, endY);
+    lines.last.endXList?.add(endX);
+    lines.last.endYList?.add(endY);
     lines.refresh();
+
   }
 
   void colorChange(Color color) {

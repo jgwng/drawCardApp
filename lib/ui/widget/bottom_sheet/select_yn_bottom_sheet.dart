@@ -30,10 +30,11 @@ class YNSelectorBottomSheet extends StatelessWidget with BottomSheetMixin {
   final String content;
   final String leftBtnText;
   final String rightBtnText;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 240,
+      height: 260,
       decoration: BoxDecoration(
           color: Color.fromRGBO(28, 28, 28, 1.0),
           borderRadius: BorderRadius.only(
@@ -62,7 +63,8 @@ class YNSelectorBottomSheet extends StatelessWidget with BottomSheetMixin {
           Text(
             content,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 15),
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
           ),
           Spacer(),
           Row(

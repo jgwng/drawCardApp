@@ -101,11 +101,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (index == 0) {
       return InkWell(
         onTap: () async {
-          Get.toNamed(Routes.coloring);
-          // var newCard = await Get.toNamed(Routes.drawing);
-          // if (newCard != null) {
-          //   controller.drawCards.add(newCard['lines']);
-          // }
+          var newCard = await Get.toNamed(Routes.drawing);
+          if (newCard != null) {
+            controller.drawCards.add(newCard['lines']);
+          }
         },
         child: Container(
           alignment: Alignment.center,

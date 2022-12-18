@@ -16,7 +16,7 @@ class Sketcher extends CustomPainter {
         ..strokeCap = StrokeCap.round
         ..style = PaintingStyle.stroke
         ..blendMode = (stroke.isErase) ? BlendMode.clear : BlendMode.srcOver;
-      canvas.drawPath(stroke.path, paint);
+      canvas.drawPath(stroke.drawPath, paint);
     }
     canvas.restore();
   }
