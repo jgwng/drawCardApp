@@ -12,7 +12,7 @@ class Routes {
   static const String detail = '/detail';
 
   //드로잉,컬러링 이미지 선택 화면
-  static const String imageSelect = '/select';
+  static const String coloring = '/coloring';
   static const String drawing = '/drawing';
   static const String pixelArt = '/pixelArt';
 

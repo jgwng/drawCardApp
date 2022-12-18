@@ -68,7 +68,7 @@ class MenuSelectDialog extends StatelessWidget {
       route = Routes.drawing;
       imageAddress = 'drawing.png';
     } else {
-      route = Routes.imageSelect;
+      route = Routes.coloring;
       imageAddress = 'coloring.png';
     }
     return Expanded(
