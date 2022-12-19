@@ -7,9 +7,10 @@ import 'package:path_provider/path_provider.dart';
 class GlobalController extends GetxController {
   String? filePath;
 
-  static GlobalController get to{
+  static GlobalController get to {
     return Get.find<GlobalController>();
   }
+
   @override
   void onInit() {
     // TODO: implement onInit

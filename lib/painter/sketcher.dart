@@ -20,10 +20,12 @@ class Sketcher extends CustomPainter {
     }
     canvas.restore();
   }
+
   @override
   bool? hitTest(Offset position) {
-   return null;
+    return null;
   }
+
   @override
   bool shouldRepaint(Sketcher oldDelegate) {
     return true;

@@ -19,27 +19,26 @@ class DrawnLine {
       this.endXList,
       this.endYList});
 
-  Path get drawPath{
+  Path get drawPath {
     Path path = Path();
     path.moveTo(startX ?? 0, startY ?? 0);
-    for(int i = 0;i <(endXList?.length ?? 0); i++){
+    for (int i = 0; i < (endXList?.length ?? 0); i++) {
       path.lineTo(endXList?[i] ?? 0, endYList?[i] ?? 0);
     }
     return path;
   }
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'paint': '${paint?.red},${paint?.green},${paint?.blue}',
         'width': width,
         'isErase': isErase,
         'startX': startX,
-        'startY':startY,
-        'endXList' : endXList,
-        'endYList' : endYList
+        'startY': startY,
+        'endXList': endXList,
+        'endYList': endYList
       };
 
-  factory DrawnLine.fromJson(Map<String,dynamic> json){
+  factory DrawnLine.fromJson(Map<String, dynamic> json) {
     return DrawnLine(
       paint: CommonUtil.lineColor(json['paint']),
       width: json['width'] ?? 2.0,
@@ -50,7 +49,4 @@ class DrawnLine {
       endYList: json['endYList'],
     );
   }
-
-
-
 }

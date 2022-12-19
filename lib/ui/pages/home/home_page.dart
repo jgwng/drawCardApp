@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/business_logic/controller/home_page/home_page_controller.dart';
 import 'package:drawcard/consts/app_themes.dart';
-import 'package:drawcard/consts/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -134,7 +133,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
         child: Image.file(
-          File('${GlobalController.to.filePath}/${controller.drawCards[index-1].thumbnailName}.png'),
+          File(
+              '${GlobalController.to.filePath}/${controller.drawCards[index - 1].thumbnailName}.png'),
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,

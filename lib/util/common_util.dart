@@ -40,15 +40,15 @@ class CommonUtil {
     return image.path;
   }
 
-  static Color lineColor(String? color){
+  static Color lineColor(String? color) {
     Color linePaint = Colors.red;
 
-    if(color == null || color.isEmpty){
+    if (color == null || color.isEmpty) {
       return linePaint;
     }
 
     List<String> colorInfo = color.split(',');
-    if(colorInfo.length<3){
+    if (colorInfo.length < 3) {
       return linePaint;
     }
 
@@ -58,5 +58,4 @@ class CommonUtil {
 
     return Color.fromRGBO(r, g, b, 0);
   }
-
 }

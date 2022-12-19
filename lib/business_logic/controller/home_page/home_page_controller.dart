@@ -8,7 +8,7 @@ class HomePageController extends GetxController {
   ScrollController scrollController = ScrollController();
   RxList<UserPicture> drawCards = <UserPicture>[].obs;
 
-  static HomePageController get to{
+  static HomePageController get to {
     return Get.find<HomePageController>();
   }
 
@@ -26,21 +26,19 @@ class HomePageController extends GetxController {
     }
   }
 
-  void onTapDrawNewCard() async{
+  void onTapDrawNewCard() async {
     var newCard = await Get.toNamed(Routes.drawing);
     if (newCard != null) {
       drawCards.add(newCard);
     }
   }
 
-  void onTapDetailDrawCard(int index) async{
-    var userCard = await Get.toNamed(Routes.detail,arguments: {'userCard' : drawCards[index-1]});
-    if(userCard != null){
-      drawCards[index-1] = userCard;
+  void onTapDetailDrawCard(int index) async {
+    var userCard = await Get.toNamed(Routes.detail,
+        arguments: {'userCard': drawCards[index - 1]});
+    if (userCard != null) {
+      drawCards[index - 1] = userCard;
       drawCards.refresh();
     }
   }
-
-
-
 }

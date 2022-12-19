@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/business_logic/model/user_picture.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
 import 'package:drawcard/business_logic/model/drawn_line.dart';
 import 'package:drawcard/business_logic/enums/save_type.dart';
@@ -53,7 +52,7 @@ class DrawPageController extends GetxController {
   void onInit() {
     super.onInit();
     Map? args = Get.arguments;
-    if(args != null){
+    if (args != null) {
       userPictureInfo = args['userCard'] ?? UserPicture();
       lines.value = userPictureInfo.drawnLines ?? <DrawnLine>[];
       isModify = true;
@@ -80,9 +79,8 @@ class DrawPageController extends GetxController {
         startX: startX,
         startY: startY,
         endXList: [],
-        endYList: []
-    );
-     lines.add(stroke);
+        endYList: []);
+    lines.add(stroke);
   }
 
   void onDrawing(DragUpdateDetails details) {
@@ -91,7 +89,6 @@ class DrawPageController extends GetxController {
     lines.last.endXList?.add(endX);
     lines.last.endYList?.add(endY);
     lines.refresh();
-
   }
 
   void colorChange(Color color) {
@@ -153,13 +150,10 @@ class DrawPageController extends GetxController {
           ?.findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage();
       ByteData? byteData =
-      await image.toByteData(format: ui.ImageByteFormat.png);
+          await image.toByteData(format: ui.ImageByteFormat.png);
       var pngBytes = byteData?.buffer.asUint8List();
 
-      final ts = DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString();
+      final ts = DateTime.now().millisecondsSinceEpoch.toString();
       final result = await ImageGallerySaver.saveImage(
           Uint8List.fromList(pngBytes!),
           quality: 90,
@@ -174,8 +168,9 @@ class DrawPageController extends GetxController {
   void onTapExitPage() async {
     final directoryPath = GlobalController.to.filePath;
 
-    if(isModify){
-      final imageFile = File('$directoryPath/${userPictureInfo.thumbnailName}.png');
+    if (isModify) {
+      final imageFile =
+          File('$directoryPath/${userPictureInfo.thumbnailName}.png');
 
       await imageFile.delete();
       int saveTime = DateTime.now().millisecondsSinceEpoch;
@@ -185,17 +180,15 @@ class DrawPageController extends GetxController {
           isLock: false,
           createDateTime: DateTime.now().toIso8601String(),
           thumbnailName: '$saveTime',
-          bgImageUrl: bgImageUrl.value
-      );
+          bgImageUrl: bgImageUrl.value);
       Get.back(result: pictureInfo);
-    }else{
+    } else {
       if (lines.isNotEmpty) {
         bool? result = await showYNSelectorBottomSheet(
             title: '그림 그리기를 종료할까요?',
             content: '임시 저장하지 않으시면,\n지금까지 그린 그림은 저장되지 않아요.',
             leftBtnText: '종료',
-            rightBtnText: '임시 저장'
-        );
+            rightBtnText: '임시 저장');
         if (result == true) {
           // using your method of getting an image
           int saveTime = DateTime.now().millisecondsSinceEpoch;
@@ -205,8 +198,7 @@ class DrawPageController extends GetxController {
               isLock: false,
               createDateTime: DateTime.now().toIso8601String(),
               thumbnailName: '$saveTime',
-              bgImageUrl: bgImageUrl.value
-          );
+              bgImageUrl: bgImageUrl.value);
 
           Get.back(result: pictureInfo);
         } else {
@@ -218,13 +210,13 @@ class DrawPageController extends GetxController {
     }
   }
 
-  Future<void> saveThumbnailImageUserPicture(int saveTime) async{
-    RenderRepaintBoundary? boundary = paletteKey.currentContext
-        ?.findRenderObject() as RenderRepaintBoundary;
+  Future<void> saveThumbnailImageUserPicture(int saveTime) async {
+    RenderRepaintBoundary? boundary =
+        paletteKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage();
     final directoryPath = GlobalController.to.filePath;
     final ByteData? newImage =
-    await image.toByteData(format: ui.ImageByteFormat.png);
+        await image.toByteData(format: ui.ImageByteFormat.png);
     final imageFile = File('$directoryPath/$saveTime.png');
     if (newImage != null) {
       await imageFile.writeAsBytes(newImage.buffer.asInt8List());
