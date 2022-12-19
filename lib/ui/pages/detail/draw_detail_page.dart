@@ -29,7 +29,7 @@ class DrawDetailPage extends GetView<DrawDetailController> {
       padding: EdgeInsets.symmetric(horizontal: 16),
       alignment: Alignment.centerLeft,
       child: InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.back(result:controller.drawnLines.value),
           child: Container(
               width: 40,
               height: 40,
@@ -43,19 +43,21 @@ class DrawDetailPage extends GetView<DrawDetailController> {
 
   Widget userDrawImage(){
     return  Expanded(
-        child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(6.0)),
-            child:  Image.file(
-              File('${GlobalController.to.filePath}/filename.png'),
-              fit: BoxFit.cover,
+        child: Obx((){
+          return Container(
               width: double.infinity,
               height: double.infinity,
-            )));
+              margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6.0)),
+              child:  Image.file(
+                File('${GlobalController.to.filePath}/${controller.drawnLines.value.thumbnailName}.png'),
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ));
+        }));
   }
 
   Widget bottomMenu(){

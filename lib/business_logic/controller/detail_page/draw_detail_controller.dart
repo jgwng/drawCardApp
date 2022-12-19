@@ -17,6 +17,10 @@ class DrawDetailController extends GetxController{
 
   void onTapEditCard() async{
     var userCard = await Get.toNamed(Routes.drawing,arguments: {'userCard' : drawnLines.value});
+    if(userCard != null){
+      drawnLines.value = userCard;
+      drawnLines.refresh();
+    }
   }
 
   void onTapSaveCard(){

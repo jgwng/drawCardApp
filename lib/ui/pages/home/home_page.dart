@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
         child: Image.file(
-          File('${GlobalController.to.filePath}/filename.png'),
+          File('${GlobalController.to.filePath}/${controller.drawCards[index-1].thumbnailName}.png'),
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,

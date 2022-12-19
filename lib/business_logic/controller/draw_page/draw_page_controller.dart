@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/business_logic/model/user_picture.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:drawcard/business_logic/enums/draw_pad_type.dart';
@@ -171,40 +172,62 @@ class DrawPageController extends GetxController {
   }
 
   void onTapExitPage() async {
-    if (lines.isNotEmpty) {
-      bool? result = await showYNSelectorBottomSheet(
-          title: '그림 그리기를 종료할까요?',
-          content: '임시 저장하지 않으시면,\n지금까지 그린 그림은 저장되지 않아요.',
-          leftBtnText: '종료',
-          rightBtnText: '임시 저장'
-      );
-      if (result == true) {
-        // using your method of getting an image
-        RenderRepaintBoundary? boundary = paletteKey.currentContext
-            ?.findRenderObject() as RenderRepaintBoundary;
-        ui.Image image = await boundary.toImage();
-        final Directory directory = await getApplicationDocumentsDirectory();
-        final ByteData? newImage =
-        await image.toByteData(format: ui.ImageByteFormat.png);
-        final imageFile = File('${directory.path}/filename.png');
-        if (newImage != null) {
-          await imageFile.writeAsBytes(newImage.buffer.asInt8List());
-        }
-        var b = newImage!.buffer.asUint8List();
-        final pictureInfo = UserPicture(
+    final directoryPath = GlobalController.to.filePath;
+
+    if(isModify){
+      final imageFile = File('$directoryPath/${userPictureInfo.thumbnailName}.png');
+
+      await imageFile.delete();
+      int saveTime = DateTime.now().millisecondsSinceEpoch;
+      await saveThumbnailImageUserPicture(saveTime);
+      final pictureInfo = UserPicture(
           drawnLines: lines,
           isLock: false,
           createDateTime: DateTime.now().toIso8601String(),
-          thumbnailName: 'fileName',
+          thumbnailName: '$saveTime',
           bgImageUrl: bgImageUrl.value
+      );
+      Get.back(result: pictureInfo);
+    }else{
+      if (lines.isNotEmpty) {
+        bool? result = await showYNSelectorBottomSheet(
+            title: '그림 그리기를 종료할까요?',
+            content: '임시 저장하지 않으시면,\n지금까지 그린 그림은 저장되지 않아요.',
+            leftBtnText: '종료',
+            rightBtnText: '임시 저장'
         );
+        if (result == true) {
+          // using your method of getting an image
+          int saveTime = DateTime.now().millisecondsSinceEpoch;
+          await saveThumbnailImageUserPicture(saveTime);
+          final pictureInfo = UserPicture(
+              drawnLines: lines,
+              isLock: false,
+              createDateTime: DateTime.now().toIso8601String(),
+              thumbnailName: '$saveTime',
+              bgImageUrl: bgImageUrl.value
+          );
 
-        Get.back(result: pictureInfo);
+          Get.back(result: pictureInfo);
+        } else {
+          Get.back();
+        }
       } else {
         Get.back();
       }
-    } else {
-      Get.back();
+    }
+  }
+
+  Future<void> saveThumbnailImageUserPicture(int saveTime) async{
+    RenderRepaintBoundary? boundary = paletteKey.currentContext
+        ?.findRenderObject() as RenderRepaintBoundary;
+    ui.Image image = await boundary.toImage();
+    final directoryPath = GlobalController.to.filePath;
+    final ByteData? newImage =
+    await image.toByteData(format: ui.ImageByteFormat.png);
+    final imageFile = File('$directoryPath/$saveTime.png');
+    if (newImage != null) {
+      await imageFile.writeAsBytes(newImage.buffer.asInt8List());
     }
   }
 }
