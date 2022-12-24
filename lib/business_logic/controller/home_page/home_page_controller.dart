@@ -36,6 +36,7 @@ class HomePageController extends GetxController {
   void onTapDetailDrawCard(int index) async {
     var userCard = await Get.toNamed(Routes.detail,
         arguments: {'userCard': drawCards[index - 1]});
+
     if (userCard != null) {
       drawCards[index - 1] = userCard;
       drawCards.refresh();

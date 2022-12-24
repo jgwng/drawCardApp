@@ -6,8 +6,4 @@ class DrawDetailBinding extends Bindings{
   void dependencies() {
     Get.put(DrawDetailController());
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

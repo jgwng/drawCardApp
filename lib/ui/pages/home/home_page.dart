@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drawcard/business_logic/controller/global_controller.dart';
 import 'package:drawcard/business_logic/controller/home_page/home_page_controller.dart';
+import 'package:drawcard/business_logic/model/user_picture.dart';
 import 'package:drawcard/consts/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,8 +12,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  double fabSize = 60;
+class _HomePageState extends State<HomePage>{
   final controller = Get.find<HomePageController>();
 
   @override
@@ -126,18 +126,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
       );
     }
+
+    UserPicture picture = controller.drawCards[index-1];
     return InkWell(
       onTap: () => controller.onTapDetailDrawCard(index),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
-        child: Image.file(
-          File(
-              '${GlobalController.to.filePath}/${controller.drawCards[index - 1].thumbnailName}.png'),
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
+        child:Stack(
+          children: [
+            Image.file(
+              File(
+                  '${GlobalController.to.filePath}/${picture.thumbnailName}.png'),
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            if(picture.isLock ?? false)
+            Positioned(
+              right: 12,
+              top: 12,
+              child: Icon(Icons.lock,size: 24,),
+            )
+          ],
         ),
       ),
     );
