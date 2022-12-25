@@ -24,18 +24,16 @@ class DrawDetailController extends GetxController {
 
   void onTapSaveCard() {}
 
-  void onTapLockCard() async{
+  void onTapLockCard() async {
     bool isUser = true;
-    if((drawnLines.value.isLock ?? false) == false){
+    if ((drawnLines.value.isLock ?? false) == false) {
       isUser = await showUserPWConfirmBottomSheet() ?? false;
     }
 
-    if(isUser == true){
+    if (isUser == true) {
       drawnLines.value.isLock = !(drawnLines.value.isLock ?? false);
       drawnLines.refresh();
     }
-
-
   }
 
   void onTapDeleteCard() async {

@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> {
   final controller = Get.find<HomePageController>();
 
   @override
@@ -127,14 +127,14 @@ class _HomePageState extends State<HomePage>{
       );
     }
 
-    UserPicture picture = controller.drawCards[index-1];
+    UserPicture picture = controller.drawCards[index - 1];
     return InkWell(
       onTap: () => controller.onTapDetailDrawCard(index),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
-        child:Stack(
+        child: Stack(
           children: [
             Image.file(
               File(
@@ -143,12 +143,15 @@ class _HomePageState extends State<HomePage>{
               width: double.infinity,
               height: double.infinity,
             ),
-            if(picture.isLock ?? false)
-            Positioned(
-              right: 12,
-              top: 12,
-              child: Icon(Icons.lock,size: 24,),
-            )
+            if (picture.isLock ?? false)
+              Positioned(
+                right: 12,
+                top: 12,
+                child: Icon(
+                  Icons.lock,
+                  size: 24,
+                ),
+              )
           ],
         ),
       ),

@@ -66,16 +66,17 @@ class DrawDetailPage extends GetView<DrawDetailController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          bottomMenuIcon(icon : Icons.edit, onTap: controller.onTapEditCard),
+          bottomMenuIcon(icon: Icons.edit, onTap: controller.onTapEditCard),
           Obx(() {
             return bottomMenuIcon(
-                icon : (controller.drawnLines.value.isLock ?? false) == true
+                icon: (controller.drawnLines.value.isLock ?? false) == true
                     ? Icons.lock_rounded
                     : Icons.lock_open_rounded,
-                onTap: controller.onTapLockCard,isLockIcon: true);
+                onTap: controller.onTapLockCard,
+                isLockIcon: true);
           }),
-          bottomMenuIcon(icon : Icons.save, onTap: controller.onTapSaveCard),
-          bottomMenuIcon(icon : Icons.delete, onTap: controller.onTapDeleteCard),
+          bottomMenuIcon(icon: Icons.save, onTap: controller.onTapSaveCard),
+          bottomMenuIcon(icon: Icons.delete, onTap: controller.onTapDeleteCard),
         ],
       ),
     );
@@ -85,26 +86,27 @@ class DrawDetailPage extends GetView<DrawDetailController> {
       {required IconData icon,
       required VoidCallback onTap,
       bool isLockIcon = false}) {
-    return Obx((){
-       bool isImageLock = controller.drawnLines.value.isLock ?? false;
-       bool isLock = isImageLock && isLockIcon;
-       return InkWell(
-         onTap: onTap,
-         child: Container(
-           height: 50,
-           width: 50,
-           decoration: BoxDecoration(
-               border: Border.all(color:isLock ? Colors.transparent :  Colors.black),
-               color: isLock ? AppThemes.pointColor :  Colors.white,
-               shape: BoxShape.circle),
-           alignment: Alignment.center,
-           child: Icon(
-             icon,
-             color: isLock ? Colors.white : Colors.black,
-             size: 25,
-           ),
-         ),
-       );
+    return Obx(() {
+      bool isImageLock = controller.drawnLines.value.isLock ?? false;
+      bool isLock = isImageLock && isLockIcon;
+      return InkWell(
+        onTap: onTap,
+        child: Container(
+          height: 50,
+          width: 50,
+          decoration: BoxDecoration(
+              border:
+                  Border.all(color: isLock ? Colors.transparent : Colors.black),
+              color: isLock ? AppThemes.pointColor : Colors.white,
+              shape: BoxShape.circle),
+          alignment: Alignment.center,
+          child: Icon(
+            icon,
+            color: isLock ? Colors.white : Colors.black,
+            size: 25,
+          ),
+        ),
+      );
     });
   }
 }

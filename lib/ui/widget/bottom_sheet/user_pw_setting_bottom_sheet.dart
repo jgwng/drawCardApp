@@ -12,25 +12,25 @@ Future<bool?> showUserPWConfirmBottomSheet() async {
   return null;
 }
 
-class UserPWConfirmBottomSheet extends StatefulWidget{
+class UserPWConfirmBottomSheet extends StatefulWidget {
   @override
-  _UserPWConfirmBottomSheetState createState() => _UserPWConfirmBottomSheetState();
+  _UserPWConfirmBottomSheetState createState() =>
+      _UserPWConfirmBottomSheetState();
 }
 
-class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
- List<int> numberList = [1,2,3,4,5,6,7,8,9];
- List<int?>? pwList;
- int currentIndex = 0;
- int? userPW;
- @override
- void initState(){
-   super.initState();
-   numberList.shuffle();
-   pwList = List.filled(6, null);
-   final box = GetStorage();
-   userPW = box.read(AppKeys.UserPW) ?? 0;
- }
-
+class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet> {
+  List<int> numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  List<int?>? pwList;
+  int currentIndex = 0;
+  int? userPW;
+  @override
+  void initState() {
+    super.initState();
+    numberList.shuffle();
+    pwList = List.filled(6, null);
+    final box = GetStorage();
+    userPW = box.read(AppKeys.UserPW) ?? 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 16,right: 16, top: 32,bottom: 30),
+            padding: EdgeInsets.only(left: 16, right: 16, top: 32, bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -76,24 +76,28 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ...pwList!.map((e) => Icon(
-                    Icons.circle,
-                    size: 28,
-                    color: e == null ? Colors.grey : AppThemes.pointColor,
-                  )).toList()
+                  ...pwList!
+                      .map((e) => Icon(
+                            Icons.circle,
+                            size: 28,
+                            color:
+                                e == null ? Colors.grey : AppThemes.pointColor,
+                          ))
+                      .toList()
                 ],
               ),
             ),
           ),
-
           Wrap(
               direction: Axis.horizontal, // 정렬 방향
               crossAxisAlignment: WrapCrossAlignment.start,
               alignment: WrapAlignment.start,
-              children: List.generate(numberList.length, (i)=>keyboardKey(i))
-            // WsmBoxWidget()
+              children: List.generate(numberList.length, (i) => keyboardKey(i))
+              // WsmBoxWidget()
+              ),
+          SizedBox(
+            height: 20,
           ),
-          SizedBox(height: 20,),
           Row(
             children: [
               Expanded(
@@ -106,7 +110,7 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
                     child: Text(
                       '취소',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white,fontSize: 20),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
               )),
               Expanded(
@@ -119,7 +123,7 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
                     child: Text(
                       '확인',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black,fontSize: 20),
+                      style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),
                 ),
@@ -134,48 +138,51 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
     );
   }
 
-  Widget keyboardKey(int i){
-   int keyNumber = numberList[i];
-   return InkWell(
+  Widget keyboardKey(int i) {
+    int keyNumber = numberList[i];
+    return InkWell(
       onTap: () => onTapKeyboardKey(keyNumber),
       child: Container(
-        width: Get.width/3,
+        width: Get.width / 3,
         height: 60,
         alignment: Alignment.center,
-        child: Text('$keyNumber',style: TextStyle(color: Colors.white,fontSize: 20),),
+        child: Text(
+          '$keyNumber',
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
       ),
     );
   }
 
-  void onTapKeyboardKey(int number){
-      setState(() {
-       if(pwList!.contains(null)){
-         pwList![currentIndex] = number;
-         if(currentIndex < 5){
-           currentIndex += 1;
-         }
-         print(pwList);
-         print(currentIndex);
-       }
-      });
+  void onTapKeyboardKey(int number) {
+    setState(() {
+      if (pwList!.contains(null)) {
+        pwList![currentIndex] = number;
+        if (currentIndex < 5) {
+          currentIndex += 1;
+        }
+        print(pwList);
+        print(currentIndex);
+      }
+    });
   }
 
-  void onTapRemovePW(){
+  void onTapRemovePW() {
     setState(() {
       pwList![currentIndex] = null;
-      if(currentIndex >0){
+      if (currentIndex > 0) {
         currentIndex -= 1;
       }
     });
   }
 
-  void onTapConfirmPW(){
-    if(pwList!.contains(null)){
+  void onTapConfirmPW() {
+    if (pwList!.contains(null)) {
       CardToast.show(msg: '비밀번호 6자리를 모두 입력해주세요');
       return;
     }
 
-    if(userPW == 0){
+    if (userPW == 0) {
       showUserPwConfirmDialog();
       print('비밀번호 설정하지 않은 상태');
       return;
@@ -183,11 +190,10 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
 
     String userTapPW = pwList!.join();
     int userEnterPW = int.parse(userTapPW);
-    if(userEnterPW == userPW){
+    if (userEnterPW == userPW) {
       return Get.back(result: true);
-    }else{
+    } else {
       CardToast.show(msg: '설정하신 비밀번호와 일치하지 않습니다');
     }
-
   }
 }
