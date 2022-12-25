@@ -1,6 +1,7 @@
 import 'package:drawcard/business_logic/model/user_picture.dart';
 import 'package:drawcard/consts/routes.dart';
 import 'package:drawcard/ui/widget/bottom_sheet/select_yn_bottom_sheet.dart';
+import 'package:drawcard/ui/widget/bottom_sheet/user_pw_setting_bottom_sheet.dart';
 import 'package:get/get.dart';
 
 class DrawDetailController extends GetxController {
@@ -23,9 +24,18 @@ class DrawDetailController extends GetxController {
 
   void onTapSaveCard() {}
 
-  void onTapLockCard() {
-    drawnLines.value.isLock = !(drawnLines.value.isLock ?? false);
-    drawnLines.refresh();
+  void onTapLockCard() async{
+    bool isUser = true;
+    if((drawnLines.value.isLock ?? false) == false){
+      isUser = await showUserPWConfirmBottomSheet() ?? false;
+    }
+
+    if(isUser == true){
+      drawnLines.value.isLock = !(drawnLines.value.isLock ?? false);
+      drawnLines.refresh();
+    }
+
+
   }
 
   void onTapDeleteCard() async {

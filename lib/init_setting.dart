@@ -1,6 +1,7 @@
 import 'package:drawcard/db/database_repository.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 //앱 시작하기전 초기 세팅 해주는 함수
 Future<void> initAppSetting() async {
@@ -8,5 +9,6 @@ Future<void> initAppSetting() async {
   WidgetsFlutterBinding.ensureInitialized();
   GestureBinding.instance.resamplingEnabled = false;
 
+  await GetStorage.init();
   // await DBRepository.instance.database;
 }
