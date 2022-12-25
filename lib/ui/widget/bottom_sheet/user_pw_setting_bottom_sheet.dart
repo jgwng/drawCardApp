@@ -1,6 +1,10 @@
 import 'package:drawcard/consts/app_themes.dart';
+import 'package:drawcard/consts/keys.dart';
+import 'package:drawcard/ui/widget/card_toast.dart';
+import 'package:drawcard/ui/widget/dialog/user_set_pw_confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 Future<bool?> showUserPWConfirmBottomSheet() async {
   final result = await Get.bottomSheet(UserPWConfirmBottomSheet());
@@ -17,11 +21,14 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
  List<int> numberList = [1,2,3,4,5,6,7,8,9];
  List<int?>? pwList;
  int currentIndex = 0;
+ int? userPW;
  @override
  void initState(){
    super.initState();
    numberList.shuffle();
    pwList = List.filled(6, null);
+   final box = GetStorage();
+   userPW = box.read(AppKeys.UserPW) ?? 0;
  }
 
 
@@ -96,11 +103,15 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
                     height: 56,
                     color: Colors.black,
                     alignment: Alignment.center,
-                    child: Icon(Icons.backspace_outlined,color: Colors.white,)),
+                    child: Text(
+                      '취소',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white,fontSize: 20),
+                    )),
               )),
               Expanded(
                 child: InkWell(
-                  onTap: () => Get.back(result: true),
+                  onTap: onTapConfirmPW,
                   child: Container(
                     color: AppThemes.pointColor,
                     height: 56,
@@ -123,8 +134,6 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
     );
   }
 
-
-
   Widget keyboardKey(int i){
    int keyNumber = numberList[i];
    return InkWell(
@@ -133,7 +142,6 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
         width: Get.width/3,
         height: 60,
         alignment: Alignment.center,
-
         child: Text('$keyNumber',style: TextStyle(color: Colors.white,fontSize: 20),),
       ),
     );
@@ -159,5 +167,27 @@ class _UserPWConfirmBottomSheetState extends State<UserPWConfirmBottomSheet>{
         currentIndex -= 1;
       }
     });
+  }
+
+  void onTapConfirmPW(){
+    if(pwList!.contains(null)){
+      CardToast.show(msg: '비밀번호 6자리를 모두 입력해주세요');
+      return;
+    }
+
+    if(userPW == 0){
+      showUserPwConfirmDialog();
+      print('비밀번호 설정하지 않은 상태');
+      return;
+    }
+
+    String userTapPW = pwList!.join();
+    int userEnterPW = int.parse(userTapPW);
+    if(userEnterPW == userPW){
+      return Get.back(result: true);
+    }else{
+      CardToast.show(msg: '설정하신 비밀번호와 일치하지 않습니다');
+    }
+
   }
 }
